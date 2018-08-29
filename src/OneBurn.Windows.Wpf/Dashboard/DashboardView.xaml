@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="OneBurn.Windows.Wpf.Dashboard.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:burn="clr-namespace:OneBurn.Windows.Wpf.Burn">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type burn:BurnOptionsViewModel}">
+                <burn:BurnOptionsView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ContentControl MinWidth="300"
+                    MinHeight="200"
+                    Content="{Binding CurrentViewModel}" />
+</UserControl>

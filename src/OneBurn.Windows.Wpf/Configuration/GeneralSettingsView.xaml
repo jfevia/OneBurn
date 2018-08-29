@@ -1,0 +1,160 @@
+﻿<UserControl x:Class="OneBurn.Windows.Wpf.Configuration.GeneralSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="15,10"
+                    Orientation="Horizontal">
+            <Viewbox Width="24"
+                     Height="24"
+                     Margin="10,5"
+                     VerticalAlignment="Top">
+                <Canvas Width="24"
+                        Height="24">
+                    <Path Data="M3,17V19H9V17H3M3,5V7H13V5H3M13,21V19H21V17H13V15H11V21H13M7,9V11H3V13H7V15H9V9H7M21,13V11H11V13H21M15,9H17V7H21V5H17V3H15V9Z"
+                          Fill="{telerik:MaterialResource ResourceKey=MarkerBrush}" />
+                </Canvas>
+            </Viewbox>
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="24"
+                           Text="General Settings" />
+                <TextBlock Text="Select your preferences." />
+                <TextBlock Text="Click Save to submit the changes." />
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              Margin="15,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="3,2"
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource RadTextBlockStyle}"
+                       Text="Theme" />
+            <telerik:RadComboBox Grid.Row="1"
+                                 Grid.Column="0"
+                                 MinWidth="390"
+                                 Margin="3,2"
+                                 VerticalAlignment="Center"
+                                 EmptyText="Select..."
+                                 FontStyle="Italic"
+                                 IsEditable="False"
+                                 ItemsSource="{Binding Themes}"
+                                 SelectedItem="{Binding SelectedTheme}"
+                                 TextSearchMode="Contains" />
+            <Grid Grid.Row="2"
+                  Grid.Column="0"
+                  Margin="0,10"
+                  HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="0,0,10,0"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Text="Connectivity" />
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,15"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="{telerik:MaterialResource ResourceKey=AccentNormalBrush}"
+                        BorderThickness="0,1,0,0" />
+            </Grid>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="3,2"
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource RadTextBlockStyle}"
+                       Text="No. of attempts" />
+            <telerik:RadNumericUpDown Grid.Row="4"
+                                      Grid.Column="0"
+                                      MinWidth="390"
+                                      Margin="3,2"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Center"
+                                      HorizontalContentAlignment="Left"
+                                      Maximum="60"
+                                      Minimum="-1"
+                                      NumberDecimalDigits="0"
+                                      Value="{Binding RetryCount}" />
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
+                       Margin="3,2"
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource RadTextBlockStyle}"
+                       Text="Time between attempts" />
+            <telerik:RadTimeSpanPicker Grid.Row="6"
+                                       Grid.Column="0"
+                                       MinWidth="390"
+                                       Margin="3,2"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                       HorizontalContentAlignment="Left"
+                                       TimeSpanWatermarkContent="Select time span..."
+                                       Value="{Binding TimeSpanBetweenRetries}">
+                <telerik:RadTimeSpanPicker.TimeSpanComponents>
+                    <telerik:SecondTimeSpanComponent />
+                </telerik:RadTimeSpanPicker.TimeSpanComponents>
+            </telerik:RadTimeSpanPicker>
+        </Grid>
+        <Border Grid.Row="2"
+                Grid.Column="0"
+                Margin="15,5"
+                Padding="10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                BorderBrush="{telerik:MaterialResource ResourceKey=AccentNormalBrush}"
+                BorderThickness="0,1,0,0">
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <telerik:RadPathButton MinWidth="50"
+                                       Margin="0,0,15,0"
+                                       Padding="10,5"
+                                       HorizontalContentAlignment="Center"
+                                       Command="{Binding SaveCommand}"
+                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadWindow, Mode=FindAncestor}}"
+                                       Content="Save"
+                                       ContentPlacement="Right"
+                                       IsDefault="True"
+                                       PathGeometry="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z">
+                    <telerik:RadPathButton.PathStyle>
+                        <Style TargetType="Path">
+                            <Setter Property="Fill" Value="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+                            <Setter Property="Margin" Value="5,0" />
+                            <Setter Property="Height" Value="24" />
+                            <Setter Property="HorizontalAlignment" Value="Left" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </telerik:RadPathButton.PathStyle>
+                </telerik:RadPathButton>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

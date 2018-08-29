@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+    <Style x:Key="CheckBoxCustomStyle"
+           TargetType="CheckBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=MarkerBrush}" />
+    </Style>
+    <Style x:Key="RadCheckBoxStyle"
+           BasedOn="{StaticResource CheckBoxCustomStyle}"
+           TargetType="CheckBox">
+        <Setter Property="Margin" Value="0,0,15,0" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+</ResourceDictionary>

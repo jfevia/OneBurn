@@ -1,0 +1,607 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+
+    <!--  Common Styles  -->
+    <Style x:Key="RadMessageBoxTextBlockStyle"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <ControlTemplate x:Key="RadMessageBoxQuestionTemplate">
+        <Viewbox Width="24"
+                 Height="24">
+            <Canvas Width="24"
+                    Height="24">
+                <Path Data="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z"
+                      Fill="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="RadMessageBoxErrorTemplate">
+        <Viewbox Width="24"
+                 Height="24">
+            <Canvas Width="24"
+                    Height="24">
+                <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
+                      Fill="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="RadMessageBoxWarningTemplate">
+        <Viewbox Width="24"
+                 Height="24">
+            <Canvas Width="24"
+                    Height="24">
+                <Path Data="M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16"
+                      Fill="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="RadMessageBoxInformationTemplate">
+        <Viewbox Width="24"
+                 Height="24">
+            <Canvas Width="24"
+                    Height="24">
+                <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+                      Fill="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="RadMessageBoxNoneTemplate">
+        <Viewbox Width="24"
+                 Height="24">
+            <Canvas Width="24"
+                    Height="24">
+                <Path Data="M19.78,2.2L24,6.42L8.44,22L0,13.55L4.22,9.33L8.44,13.55L19.78,2.2M19.78,5L8.44,16.36L4.22,12.19L2.81,13.55L8.44,19.17L21.19,6.42L19.78,5Z"
+                      Fill="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+
+    <!--  Question Styles  -->
+    <Style x:Key="RadMessageBoxQuestionOKCancelStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxQuestionTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                Background="Gray"
+                                BorderBrush="DarkGray"
+                                BorderThickness="0,0,0,1" />
+                        <WrapPanel Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right">
+                            <telerik:RadButton x:Name="OK"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="OK"
+                                               IsDefault="True" />
+                            <telerik:RadButton x:Name="Cancel"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="Cancel"
+                                               IsCancel="True" />
+                        </WrapPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxQuestionYesNoStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxQuestionTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <WrapPanel Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right">
+                            <telerik:RadButton x:Name="OK"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="Yes"
+                                               IsDefault="True" />
+                            <telerik:RadButton x:Name="Cancel"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="No"
+                                               IsCancel="True" />
+                        </WrapPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxQuestionYesNoCancelStyle"
+           TargetType="telerik:RadConfirm">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxQuestionTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                Background="Gray"
+                                BorderBrush="DarkGray"
+                                BorderThickness="0,0,0,1" />
+                        <WrapPanel Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right">
+                            <telerik:RadButton x:Name="Yes"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               HorizontalAlignment="Right"
+                                               telerik:RadWindow.ResponseButton="Accept"
+                                               Command="telerik:WindowCommands.Confirm"
+                                               Content="Yes"
+                                               InnerCornerRadius="0"
+                                               IsDefault="True" />
+                            <telerik:RadButton x:Name="OK"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               HorizontalAlignment="Right"
+                                               telerik:RadWindow.ResponseButton="Cancel"
+                                               Command="telerik:WindowCommands.Cancel"
+                                               Content="No"
+                                               InnerCornerRadius="0"
+                                               IsCancel="True" />
+                            <telerik:RadButton x:Name="Cancel"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               HorizontalAlignment="Right"
+                                               telerik:RadWindow.ResponseButton="None"
+                                               Command="telerik:WindowCommands.Close"
+                                               Content="Cancel"
+                                               InnerCornerRadius="0"
+                                               IsCancel="True" />
+                        </WrapPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Hand/Stop/Error Styles  -->
+    <Style x:Key="RadMessageBoxHandOKStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxErrorTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <telerik:RadButton x:Name="OK"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           MinWidth="70"
+                                           Margin="0,10,8,8"
+                                           HorizontalAlignment="Right"
+                                           Content="OK"
+                                           IsDefault="True" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxStopOKStyle"
+           BasedOn="{StaticResource RadMessageBoxHandOKStyle}"
+           TargetType="telerik:RadAlert" />
+    <Style x:Key="RadMessageBoxErrorOKStyle"
+           BasedOn="{StaticResource RadMessageBoxHandOKStyle}"
+           TargetType="telerik:RadAlert" />
+
+    <!--  Warning/Exclamation Styles  -->
+    <Style x:Key="RadMessageBoxExclamationOKCancelStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxWarningTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <WrapPanel Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right">
+                            <telerik:RadButton x:Name="OK"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="OK"
+                                               IsDefault="True" />
+                            <telerik:RadButton x:Name="Cancel"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="Cancel"
+                                               IsCancel="True" />
+                        </WrapPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxWarningOKCancelStyle"
+           BasedOn="{StaticResource RadMessageBoxExclamationOKCancelStyle}"
+           TargetType="telerik:RadAlert" />
+    <Style x:Key="RadMessageBoxExclamationOKStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxWarningTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <telerik:RadButton x:Name="OK"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           MinWidth="70"
+                                           Margin="0,10,8,8"
+                                           HorizontalAlignment="Right"
+                                           Content="OK"
+                                           IsDefault="True" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxWarningOKStyle"
+           BasedOn="{StaticResource RadMessageBoxExclamationOKStyle}"
+           TargetType="telerik:RadAlert" />
+    <Style x:Key="RadMessageBoxExclamationYesNoStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxWarningTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <WrapPanel Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Right">
+                            <telerik:RadButton x:Name="OK"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="Yes"
+                                               IsDefault="True" />
+                            <telerik:RadButton x:Name="Cancel"
+                                               MinWidth="70"
+                                               Margin="0,10,8,8"
+                                               Content="No"
+                                               IsCancel="True" />
+                        </WrapPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxWarningYesNoStyle"
+           BasedOn="{StaticResource RadMessageBoxExclamationYesNoStyle}"
+           TargetType="telerik:RadAlert" />
+
+    <!--  Asterisk/Information Styles  -->
+    <Style x:Key="RadMessageBoxAsteriskOKStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxInformationTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <telerik:RadButton x:Name="OK"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           MinWidth="70"
+                                           Margin="0,10,8,8"
+                                           HorizontalAlignment="Right"
+                                           Content="OK"
+                                           IsDefault="True" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="RadMessageBoxInformationOKStyle"
+           BasedOn="{StaticResource RadMessageBoxAsteriskOKStyle}"
+           TargetType="telerik:RadAlert" />
+
+    <!--  Other Styles  -->
+    <Style x:Key="RadMessageBoxNoneOKStyle"
+           TargetType="telerik:RadAlert">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="275" />
+        <Setter Property="MaxWidth" Value="500" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadAlert">
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Width="48"
+                                        Height="48"
+                                        Margin="16,8,8,8"
+                                        VerticalAlignment="Top"
+                                        Template="{StaticResource RadMessageBoxNoneTemplate}" />
+                        <ContentPresenter x:Name="AlertText"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="8,8,8,0">
+                            <ContentPresenter.Resources>
+                                <Style BasedOn="{StaticResource RadMessageBoxTextBlockStyle}"
+                                       TargetType="{x:Type TextBlock}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                        <Border x:Name="HorizontalRule"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Height="2"
+                                VerticalAlignment="Top"
+                                BorderThickness="0,0,0,1" />
+                        <telerik:RadButton x:Name="OK"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           MinWidth="70"
+                                           Margin="0,10,8,8"
+                                           HorizontalAlignment="Right"
+                                           Content="OK"
+                                           IsDefault="True" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

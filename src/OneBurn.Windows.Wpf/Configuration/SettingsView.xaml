@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="OneBurn.Windows.Wpf.Configuration.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:configuration="clr-namespace:OneBurn.Windows.Wpf.Configuration">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type configuration:GeneralSettingsViewModel}">
+            <configuration:GeneralSettingsView />
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <configuration:SettingsMenu Grid.Row="0"
+                                    Grid.Column="0" />
+        <ContentControl Grid.Row="0"
+                        Grid.Column="1"
+                        Content="{Binding CurrentViewModel}" />
+    </Grid>
+</UserControl>

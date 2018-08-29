@@ -1,0 +1,15 @@
+﻿<Application x:Class="OneBurn.Windows.Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Telerik.Windows.Controls;component/Themes/FontResources.xaml" />
+                <ResourceDictionary Source="/Styles/RadTextBlock.xaml" />
+                <ResourceDictionary Source="/Styles/RadCheckBox.xaml" />
+                <ResourceDictionary Source="/Styles/RadGridView.xaml" />
+                <ResourceDictionary Source="/Styles/RadMessageBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

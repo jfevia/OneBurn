@@ -1,0 +1,223 @@
+﻿<UserControl x:Class="OneBurn.Windows.Wpf.Shell.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:OneBurn.Windows.Wpf.Converters"
+             xmlns:shell="clr-namespace:OneBurn.Windows.Wpf.Shell"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:dashboard="clr-namespace:OneBurn.Windows.Wpf.Dashboard"
+             xmlns:configuration="clr-namespace:OneBurn.Windows.Wpf.Configuration"
+             xmlns:about="clr-namespace:OneBurn.Windows.Wpf.About">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <telerik:MaterialResourceDictionary />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <converters:CurrentViewToBooleanMultiValueConverter x:Key="CurrentViewToBooleanMultiValueConverter" />
+            <Style x:Key="HamburgerButtonStyle"
+                   TargetType="{x:Type telerik:RadExpander}">
+                <Setter Property="ExpandDirection" Value="Right" />
+                <Setter Property="HeaderButtonStyle">
+                    <Setter.Value>
+                        <Style TargetType="{x:Type telerik:RadToggleButton}">
+                            <Setter Property="Width" Value="48" />
+                            <Setter Property="Height" Value="54" />
+                            <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=IconBrush}" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="HorizontalAlignment" Value="Left" />
+                            <Setter Property="Background" Value="#01FFFFFF" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type telerik:RadToggleButton}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <telerik:RadGlyph HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              FontSize="18"
+                                                              Glyph="&#xe030;"
+                                                              RenderTransformOrigin=".5 .5">
+                                                <telerik:RadGlyph.RenderTransform>
+                                                    <RotateTransform Angle="90" />
+                                                </telerik:RadGlyph.RenderTransform>
+                                            </telerik:RadGlyph>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{telerik:MaterialResource ResourceKey=AccentHoverBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="telerik:AnimationManager.AnimationSelector">
+                    <Setter.Value>
+                        <telerik:AnimationSelector>
+                            <telerik:ExpanderExpandCollapseAnimation AnimationName="Expand"
+                                                                     Direction="In"
+                                                                     TargetElementName="Content" />
+                            <telerik:ExpanderExpandCollapseAnimation AnimationName="Collapse"
+                                                                     Direction="Out"
+                                                                     TargetElementName="Content" />
+                            <telerik:ExpanderExpandCollapseAnimation AnimationName="ExpandHorizontal"
+                                                                     Direction="In"
+                                                                     SpeedRatio="2"
+                                                                     TargetElementName="Content" />
+                            <telerik:ExpanderExpandCollapseAnimation AnimationName="CollapseHorizontal"
+                                                                     Direction="Out"
+                                                                     SpeedRatio="2"
+                                                                     TargetElementName="Content" />
+                        </telerik:AnimationSelector>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="RadRadioButtonWithPathStyle"
+                   TargetType="telerik:RadRadioButton">
+                <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=MarkerBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=MarkerInvertedBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=MarkerInvertedBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
+                <Viewbox Width="24"
+                         Height="24">
+                    <Canvas Width="24"
+                            Height="24">
+                        <Path Data="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z"
+                              Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=telerik:RadRadioButton}}" />
+                    </Canvas>
+                </Viewbox>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type configuration:SettingsViewModel}">
+                <Viewbox Width="24"
+                         Height="24">
+                    <Canvas Width="24"
+                            Height="24">
+                        <Path Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
+                              Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=telerik:RadRadioButton}}" />
+                    </Canvas>
+                </Viewbox>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type about:AboutViewModel}">
+                <Viewbox Width="24"
+                         Height="24">
+                    <Canvas Width="24"
+                            Height="24">
+                        <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+                              Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=telerik:RadRadioButton}}" />
+                    </Canvas>
+                </Viewbox>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <telerik:RadExpander x:Name="HamburgerExpander"
+                             Background="{telerik:MaterialResource ResourceKey=DividerBrush}"
+                             IsExpanded="{Binding RelativeSource={RelativeSource AncestorType={x:Type shell:MainMenu}}, Path=IsExpanded, Mode=TwoWay}"
+                             Style="{StaticResource HamburgerButtonStyle}">
+            <TextBlock MinWidth="150"
+                       Margin="0,10,0,0"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Text="OneBurn" />
+        </telerik:RadExpander>
+        <Grid Margin="0,48,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalAlignment="Top">
+                <ItemsControl ItemsSource="{Binding PrimaryViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <telerik:RadRadioButton Padding="15,10"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Background="{telerik:MaterialResource ResourceKey=DividerBrush}"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.SetCurrentViewModelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    FontFamily="{StaticResource TelerikWebUI}"
+                                                    FontSize="24"
+                                                    GroupName="MainMenu"
+                                                    Style="{StaticResource RadRadioButtonWithPathStyle}">
+                                <telerik:RadRadioButton.IsChecked>
+                                    <MultiBinding Converter="{StaticResource CurrentViewToBooleanMultiValueConverter}"
+                                                  Mode="OneWay">
+                                        <Binding Path="DataContext.CurrentViewModel"
+                                                 RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" />
+                                        <Binding Path="." />
+                                    </MultiBinding>
+                                </telerik:RadRadioButton.IsChecked>
+                                <telerik:RadRadioButton.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="10,0,0,4"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="18"
+                                                   Text="{Binding Title}"
+                                                   Visibility="{Binding IsExpanded, ElementName=HamburgerExpander, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <ContentControl Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Content="{Binding}" />
+                                    </Grid>
+                                </telerik:RadRadioButton.Content>
+                            </telerik:RadRadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Row="2"
+                        Grid.Column="0"
+                        VerticalAlignment="Bottom">
+                <ItemsControl ItemsSource="{Binding SecondaryViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <telerik:RadRadioButton Padding="15,10"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Background="{telerik:MaterialResource ResourceKey=DividerBrush}"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.SetCurrentViewModelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    FontFamily="{StaticResource TelerikWebUI}"
+                                                    FontSize="24"
+                                                    GroupName="MainMenu"
+                                                    Style="{StaticResource RadRadioButtonWithPathStyle}">
+                                <telerik:RadRadioButton.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="10,0,0,4"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="18"
+                                                   Text="{Binding Title}"
+                                                   Visibility="{Binding IsExpanded, ElementName=HamburgerExpander, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <ContentControl Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Content="{Binding}" />
+                                    </Grid>
+                                </telerik:RadRadioButton.Content>
+                            </telerik:RadRadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
