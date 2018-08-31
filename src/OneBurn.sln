@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBurn.Windows.Shell", "On
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBurn.Windows.Controls", "OneBurn.Windows.Controls\OneBurn.Windows.Controls.csproj", "{16CFE17D-FBBA-4C56-A6E7-D51CDA177CE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneBurn.Burning", "OneBurn.Burning\OneBurn.Burning.csproj", "{2828EA43-1CB0-4FAB-9818-ECF252EA40CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{16CFE17D-FBBA-4C56-A6E7-D51CDA177CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16CFE17D-FBBA-4C56-A6E7-D51CDA177CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16CFE17D-FBBA-4C56-A6E7-D51CDA177CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2828EA43-1CB0-4FAB-9818-ECF252EA40CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2828EA43-1CB0-4FAB-9818-ECF252EA40CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2828EA43-1CB0-4FAB-9818-ECF252EA40CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2828EA43-1CB0-4FAB-9818-ECF252EA40CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
