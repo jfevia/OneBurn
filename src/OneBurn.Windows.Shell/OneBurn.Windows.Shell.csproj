@@ -51,11 +51,11 @@
   <ItemGroup>
     <Compile Include="About\AboutViewModelBase.cs" />
     <Compile Include="AsyncCommand.cs" />
-    <Compile Include="Burn\BurnFilesAndFoldersViewModelBase.cs" />
-    <Compile Include="Burn\BurnImageViewModelBase.cs" />
-    <Compile Include="Burn\BurnOptionsViewModelBase.cs" />
-    <Compile Include="Burn\CreateImageFromFilesAndFoldersViewModelBase.cs" />
-    <Compile Include="Burn\CreateImageFromMediaViewModelBase.cs" />
+    <Compile Include="Burning\BurnFilesAndFoldersViewModelBase.cs" />
+    <Compile Include="Burning\BurnImageViewModelBase.cs" />
+    <Compile Include="Burning\BurnOptionsViewModelBase.cs" />
+    <Compile Include="Burning\CreateImageFromFilesAndFoldersViewModelBase.cs" />
+    <Compile Include="Burning\CreateImageFromMediaViewModelBase.cs" />
     <Compile Include="Configuration\GeneralSettingsViewModelBase.cs" />
     <Compile Include="Configuration\SettingsViewModelBase.cs" />
     <Compile Include="ContextViewModelBase.cs" />

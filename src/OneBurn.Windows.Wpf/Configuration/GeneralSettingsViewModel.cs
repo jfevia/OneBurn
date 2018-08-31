@@ -72,8 +72,10 @@ namespace OneBurn.Windows.Wpf.Configuration
                     new FluentTheme(),
                     new MaterialTheme(),
                     new Office2016Theme(),
+                    new Office2016TouchTheme(),
                     new Windows7Theme(),
-                    new Windows8Theme()
+                    new Windows8Theme(),
+                    new Windows8TouchTheme()
                 };
 
                 var currentThemeType = Settings.Default.GeneralAppearanceTheme.GetType();

@@ -1,6 +1,6 @@
-﻿using OneBurn.Windows.Shell.Burn;
+﻿using OneBurn.Windows.Shell.Burning;
 
-namespace OneBurn.Windows.Wpf.Burn
+namespace OneBurn.Windows.Wpf.Burning
 {
     internal sealed class BurnImageViewModel : BurnImageViewModelBase
     {

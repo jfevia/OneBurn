@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using OneBurn.Windows.Shell;
-using OneBurn.Windows.Shell.Burn;
+using OneBurn.Windows.Shell.Burning;
 using OneBurn.Windows.Wpf.Properties;
 
-namespace OneBurn.Windows.Wpf.Burn
+namespace OneBurn.Windows.Wpf.Burning
 {
     internal sealed class BurnOptionsViewModel : BurnOptionsViewModelBase
     {
@@ -16,6 +15,8 @@ namespace OneBurn.Windows.Wpf.Burn
         public BurnOptionsViewModel()
         {
             Title = "Burn Options";
+
+            SetCurrentViewModelCommand = new AsyncCommand<object>(OnSetCurrentViewModel);
         }
 
         /// <inheritdoc />
@@ -32,10 +33,8 @@ namespace OneBurn.Windows.Wpf.Burn
                 new BurnImageViewModel(),
                 new BurnFilesAndFoldersViewModel(),
                 new CreateImageFromMediaViewModel(),
-                new CreateImageFromFilesAndFoldersViewModel(),
+                new CreateImageFromFilesAndFoldersViewModel()
             };
-
-            //await OnSetCurrentViewModel(ViewModels.FirstOrDefault());
         }
 
         /// <summary>

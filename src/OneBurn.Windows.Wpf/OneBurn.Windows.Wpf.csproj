@@ -68,26 +68,27 @@
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="About\AboutViewModel.cs" />
-    <Compile Include="Burn\BurnFilesAndFoldersView.xaml.cs">
+    <Compile Include="Burning\BurnFilesAndFoldersView.xaml.cs">
       <DependentUpon>BurnFilesAndFoldersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Burn\BurnFilesAndFoldersViewModel.cs" />
-    <Compile Include="Burn\BurnImageView.xaml.cs">
+    <Compile Include="Burning\BurnFilesAndFoldersViewModel.cs" />
+    <Compile Include="Burning\BurnImageView.xaml.cs">
       <DependentUpon>BurnImageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Burn\BurnImageViewModel.cs" />
-    <Compile Include="Burn\BurnOptionsView.xaml.cs">
+    <Compile Include="Burning\BurnImageViewModel.cs" />
+    <Compile Include="Burning\BurnOptionsContentTemplateSelector.cs" />
+    <Compile Include="Burning\BurnOptionsView.xaml.cs">
       <DependentUpon>BurnOptionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Burn\BurnOptionsViewModel.cs" />
-    <Compile Include="Burn\CreateImageFromFilesAndFoldersView.xaml.cs">
+    <Compile Include="Burning\BurnOptionsViewModel.cs" />
+    <Compile Include="Burning\CreateImageFromFilesAndFoldersView.xaml.cs">
       <DependentUpon>CreateImageFromFilesAndFoldersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Burn\CreateImageFromFilesAndFoldersViewModel.cs" />
-    <Compile Include="Burn\CreateImageFromMediaView.xaml.cs">
+    <Compile Include="Burning\CreateImageFromFilesAndFoldersViewModel.cs" />
+    <Compile Include="Burning\CreateImageFromMediaView.xaml.cs">
       <DependentUpon>CreateImageFromMediaView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Burn\CreateImageFromMediaViewModel.cs" />
+    <Compile Include="Burning\CreateImageFromMediaViewModel.cs" />
     <Compile Include="Configuration\GeneralSettingsView.xaml.cs">
       <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
     </Compile>
@@ -117,23 +118,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Burn\BurnFilesAndFoldersView.xaml">
+    <Page Include="Burning\BurnFilesAndFoldersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Burn\BurnImageView.xaml">
+    <Page Include="Burning\BurnImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Burn\BurnOptionsView.xaml">
+    <Page Include="Burning\BurnOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Burn\CreateImageFromFilesAndFoldersView.xaml">
+    <Page Include="Burning\CreateImageFromFilesAndFoldersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Burn\CreateImageFromMediaView.xaml">
+    <Page Include="Burning\CreateImageFromMediaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

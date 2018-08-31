@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OneBurn.Windows.Shell;
 using OneBurn.Windows.Shell.Dashboard;
-using OneBurn.Windows.Wpf.Burn;
+using OneBurn.Windows.Wpf.Burning;
 using OneBurn.Windows.Wpf.Properties;
 
 namespace OneBurn.Windows.Wpf.Dashboard
