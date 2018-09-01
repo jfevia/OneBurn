@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using OneBurn.Windows.Wpf.DiscLayout;
 
 namespace OneBurn.Windows.Wpf.Burning
 {
@@ -38,6 +39,14 @@ namespace OneBurn.Windows.Wpf.Burning
         public DataTemplate CreateImageFromFilesAndFoldersTemplate { get; set; }
 
         /// <summary>
+        ///     Gets or sets the disc layout editor template.
+        /// </summary>
+        /// <value>
+        ///     The disc layout editor template.
+        /// </value>
+        public DataTemplate DiscLayoutEditorTemplate { get; set; }
+
+        /// <summary>
         ///     Gets or sets the default template.
         /// </summary>
         /// <value>
@@ -72,6 +81,9 @@ namespace OneBurn.Windows.Wpf.Burning
 
             if (type == typeof(CreateImageFromFilesAndFoldersViewModel))
                 return CreateImageFromFilesAndFoldersTemplate;
+
+            if (type == typeof(DiscLayoutEditorViewModel))
+                return DiscLayoutEditorTemplate;
 
             return DefaultTemplate;
         }

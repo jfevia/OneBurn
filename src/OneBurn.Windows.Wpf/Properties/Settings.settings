@@ -11,5 +11,8 @@
     <Setting Name="GeneralAppearanceTheme" Type="Telerik.Windows.Controls.Theme" Scope="User">
       <Value Profile="(Default)">Material</Value>
     </Setting>
+    <Setting Name="OpticalDriveAuthoringEngineKeyFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%CommonApplicationData%\OneBurn\odae.key</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

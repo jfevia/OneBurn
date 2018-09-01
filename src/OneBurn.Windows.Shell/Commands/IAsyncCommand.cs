@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace OneBurn.Windows.Shell
+namespace OneBurn.Windows.Shell.Commands
 {
     public interface IAsyncCommand : ICommand
     {

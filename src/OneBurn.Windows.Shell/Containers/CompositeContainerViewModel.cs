@@ -2,16 +2,16 @@
 
 namespace OneBurn.Windows.Shell.Containers
 {
-    public abstract class CompositeContainerViewModelBase : ContainerViewModelBase
+    public class CompositeContainerViewModel : ContainerViewModelBase
     {
         private ObservableCollection<ContextViewModelBase> _primaryViewModels;
         private ObservableCollection<ContextViewModelBase> _secondaryViewModels;
 
         /// <inheritdoc />
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CompositeContainerViewModelBase" /> class.
+        ///     Initializes a new instance of the <see cref="CompositeContainerViewModel" /> class.
         /// </summary>
-        protected CompositeContainerViewModelBase()
+        public CompositeContainerViewModel()
         {
             _primaryViewModels = new ObservableCollection<ContextViewModelBase>();
             _secondaryViewModels = new ObservableCollection<ContextViewModelBase>();

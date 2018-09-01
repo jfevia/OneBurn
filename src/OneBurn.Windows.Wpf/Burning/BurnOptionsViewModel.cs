@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using OneBurn.Windows.Shell;
 using OneBurn.Windows.Shell.Burning;
+using OneBurn.Windows.Shell.Commands;
+using OneBurn.Windows.Wpf.DiscLayout;
 using OneBurn.Windows.Wpf.Properties;
 
 namespace OneBurn.Windows.Wpf.Burning
@@ -33,7 +35,8 @@ namespace OneBurn.Windows.Wpf.Burning
                 new BurnImageViewModel(),
                 new BurnFilesAndFoldersViewModel(),
                 new CreateImageFromMediaViewModel(),
-                new CreateImageFromFilesAndFoldersViewModel()
+                new CreateImageFromFilesAndFoldersViewModel(),
+                new DiscLayoutEditorViewModel()
             };
         }
 

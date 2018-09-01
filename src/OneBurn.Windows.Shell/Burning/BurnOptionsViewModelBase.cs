@@ -2,7 +2,7 @@
 
 namespace OneBurn.Windows.Shell.Burning
 {
-    public abstract class BurnOptionsViewModelBase : SingleContainerViewModelBase
+    public abstract class BurnOptionsViewModelBase : SingleContainerViewModel
     {
     }
 }

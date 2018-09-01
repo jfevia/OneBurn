@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About\AboutViewModelBase.cs" />
-    <Compile Include="AsyncCommand.cs" />
+    <Compile Include="Commands\AsyncCommand.cs" />
     <Compile Include="Burning\BurnFilesAndFoldersViewModelBase.cs" />
     <Compile Include="Burning\BurnImageViewModelBase.cs" />
     <Compile Include="Burning\BurnOptionsViewModelBase.cs" />
@@ -60,13 +60,17 @@
     <Compile Include="Configuration\SettingsViewModelBase.cs" />
     <Compile Include="ContextViewModelBase.cs" />
     <Compile Include="Dashboard\DashboardViewModelBase.cs" />
-    <Compile Include="IAsyncCommand.cs" />
+    <Compile Include="Commands\IAsyncCommand.cs" />
+    <Compile Include="DiscLayout\DiscLayoutEditorViewModelBase.cs" />
+    <Compile Include="FileSystem\DirectoryItemViewModelBase.cs" />
+    <Compile Include="FileSystem\FileItemViewModelBase.cs" />
+    <Compile Include="FileSystem\FileSystemItemViewModelBase.cs" />
     <Compile Include="IAwaitable.cs" />
     <Compile Include="IExecuteWithObject.cs" />
     <Compile Include="IViewable.cs" />
-    <Compile Include="Containers\CompositeContainerViewModelBase.cs" />
+    <Compile Include="Containers\CompositeContainerViewModel.cs" />
     <Compile Include="Containers\ContainerViewModelBase.cs" />
-    <Compile Include="Containers\SingleContainerViewModelBase.cs" />
+    <Compile Include="Containers\SingleContainerViewModel.cs" />
     <Compile Include="Messaging\ExceptionMessage.cs" />
     <Compile Include="Messaging\MessageBase.cs" />
     <Compile Include="ObservableObject.cs" />
@@ -101,6 +105,10 @@
     <ProjectReference Include="..\OneBurn.Core\OneBurn.Core.csproj">
       <Project>{0a76d043-d2b4-466e-9bdb-671edf232d55}</Project>
       <Name>OneBurn.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneBurn.FileSystem\OneBurn.FileSystem.csproj">
+      <Project>{f07655a1-1b83-48b7-ad80-c95a7d38464c}</Project>
+      <Name>OneBurn.FileSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

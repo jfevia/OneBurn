@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using OneBurn.Windows.Shell;
+using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Configuration;
 
 namespace OneBurn.Windows.Wpf.Configuration

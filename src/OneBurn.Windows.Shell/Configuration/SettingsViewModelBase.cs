@@ -2,7 +2,7 @@
 
 namespace OneBurn.Windows.Shell.Configuration
 {
-    public abstract class SettingsViewModelBase : SingleContainerViewModelBase
+    public abstract class SettingsViewModelBase : SingleContainerViewModel
     {
     }
 }

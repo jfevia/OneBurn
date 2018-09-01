@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using OneBurn.Core;
 using OneBurn.Windows.Shell;
+using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Containers;
 using OneBurn.Windows.Wpf.About;
 using OneBurn.Windows.Wpf.Configuration;
@@ -13,7 +14,7 @@ using OneBurn.Windows.Wpf.Properties;
 
 namespace OneBurn.Windows.Wpf.Shell
 {
-    internal sealed class MainWindowViewModel : CompositeContainerViewModelBase
+    internal sealed class MainWindowViewModel : CompositeContainerViewModel
     {
         private Assembly _assembly;
 

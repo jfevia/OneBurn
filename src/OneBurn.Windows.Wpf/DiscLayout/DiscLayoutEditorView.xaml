@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="OneBurn.Windows.Wpf.DiscLayout.DiscLayoutEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:containers="clr-namespace:OneBurn.Windows.Wpf.Containers"
+             xmlns:fileSystem="clr-namespace:OneBurn.Windows.Wpf.FileSystem"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type fileSystem:DirectoryItemViewModel}">
+            <Viewbox Width="24"
+                     Height="24"
+                     Margin="10,5"
+                     VerticalAlignment="Top">
+                <Canvas Width="24"
+                        Height="24">
+                    <Path Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"
+                          Fill="#FFE68C" />
+                </Canvas>
+            </Viewbox>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="DirectoryItemTemplate"
+                                  DataType="fileSystem:DirectoryItemViewModel"
+                                  ItemsSource="{Binding ChildDirectories}">
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Grid.Row="0"
+                                  Grid.Column="0"
+                                  Margin="3,2"
+                                  VerticalAlignment="Center"
+                                  Content="{Binding}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="3,2"
+                           VerticalAlignment="Center"
+                           Text="{Binding Name}" />
+            </Grid>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="30*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="60*" />
+        </Grid.ColumnDefinitions>
+        <telerik:RadMenu Grid.Row="0"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         ItemsSource="{Binding PrimaryViewModels}">
+            <telerik:RadMenu.ItemContainerStyle>
+                <Style TargetType="telerik:RadMenuItem">
+                    <Setter Property="Header" Value="{Binding Title}" />
+                    <Setter Property="ItemsSource" Value="{Binding ViewModels}" />
+                    <Setter Property="Command" Value="{Binding Command}" />
+                </Style>
+            </telerik:RadMenu.ItemContainerStyle>
+        </telerik:RadMenu>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <telerik:RadTreeView IsLoadOnDemandEnabled="True"
+                                 ItemTemplate="{StaticResource DirectoryItemTemplate}"
+                                 ItemsSource="{Binding DirectoryItems}"
+                                 SelectedItem="{Binding SelectedDirectoryItem}"
+                                 SelectionMode="Single">
+                <telerik:EventToCommandBehavior.EventBindings>
+                    <telerik:EventBinding Command="{Binding LoadChildDirectoriesCommand}"
+                                          EventName="Expanded"
+                                          PassEventArgsToCommand="True"
+                                          RaiseOnHandledEvents="True" />
+                    <telerik:EventBinding Command="{Binding LoadChildFilesCommand}"
+                                          EventName="SelectionChanged"
+                                          PassEventArgsToCommand="False"
+                                          RaiseOnHandledEvents="True" />
+                </telerik:EventToCommandBehavior.EventBindings>
+            </telerik:RadTreeView>
+        </ScrollViewer>
+        <telerik:RadGridView Grid.Row="1"
+                             Grid.Column="1"
+                             ItemsSource="{Binding SelectedDirectoryItem.ChildFiles}"
+                             SelectedItem="{Binding SelectedFileItem}" />
+        <telerik:RadToolBar Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            ItemsSource="{Binding SecondaryViewModels}">
+            <telerik:RadToolBar.ItemTemplate>
+                <DataTemplate DataType="containers:CommandContainerViewModel">
+                    <telerik:RadMenuItem Command="{Binding Command}"
+                                         Header="{Binding Title}" />
+                </DataTemplate>
+            </telerik:RadToolBar.ItemTemplate>
+        </telerik:RadToolBar>
+        <telerik:RadTreeView Grid.Row="3"
+                             Grid.Column="0" />
+        <telerik:RadGridView Grid.Row="3"
+                             Grid.Column="1" />
+    </Grid>
+</UserControl>

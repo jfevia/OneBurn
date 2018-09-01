@@ -2,7 +2,7 @@
 
 namespace OneBurn.Windows.Shell.Dashboard
 {
-    public abstract class DashboardViewModelBase : SingleContainerViewModelBase
+    public abstract class DashboardViewModelBase : SingleContainerViewModel
     {
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OneBurn.Burning")]
+[assembly: AssemblyTitle("OneBurn.FileSystem")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OneBurn.Burning")]
+[assembly: AssemblyProduct("OneBurn.FileSystem")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2828ea43-1cb0-4fab-9818-ecf252ea40cc")]
+[assembly: Guid("f07655a1-1b83-48b7-ad80-c95a7d38464c")]
 
 // Version information for an assembly consists of the following four values:
 //

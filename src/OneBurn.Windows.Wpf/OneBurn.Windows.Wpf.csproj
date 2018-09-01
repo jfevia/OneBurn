@@ -100,17 +100,31 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configuration\SettingsViewModel.cs" />
+    <Compile Include="Containers\CommandContainerViewModel.cs" />
+    <Compile Include="Converters\DriveSpeedToStringConverter.cs" />
+    <Compile Include="Converters\DriveInfoToStringConverter.cs" />
     <Compile Include="Dashboard\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dashboard\DashboardViewModel.cs" />
+    <Compile Include="DiscLayout\DiscLayoutEditorView.xaml.cs">
+      <DependentUpon>DiscLayoutEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DiscLayout\DiscLayoutEditorViewModel.cs" />
+    <Compile Include="FileSystem\DirectoryItemViewModel.cs" />
+    <Compile Include="FileSystem\FileItemViewModel.cs" />
+    <Compile Include="FileSystem\FileSystemItemViewModel.cs" />
+    <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IFileSystemService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\IOdaeService.cs" />
     <Compile Include="Services\IThemeService.cs" />
     <Compile Include="Services\RadApplicationService.cs" />
     <Compile Include="Services\RadDialogService.cs" />
     <Compile Include="Services\RadMessageBoxService.cs" />
+    <Compile Include="Services\RadOdaeService.cs" />
     <Compile Include="Services\RadThemeService.cs" />
     <Compile Include="Shell\MainWindowClosedMessage.cs" />
     <Compile Include="Shell\MainWindowViewModel.cs" />
@@ -151,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dashboard\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DiscLayout\DiscLayoutEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,6 +241,10 @@
       <Project>{0a76d043-d2b4-466e-9bdb-671edf232d55}</Project>
       <Name>OneBurn.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OneBurn.FileSystem\OneBurn.FileSystem.csproj">
+      <Project>{f07655a1-1b83-48b7-ad80-c95a7d38464c}</Project>
+      <Name>OneBurn.FileSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OneBurn.Windows.Controls\OneBurn.Windows.Controls.csproj">
       <Project>{16cfe17d-fbba-4c56-a6e7-d51cda177ce0}</Project>
       <Name>OneBurn.Windows.Controls</Name>
@@ -231,6 +253,17 @@
       <Project>{bad763ce-86e4-4886-a0ac-62e99a526735}</Project>
       <Name>OneBurn.Windows.Shell</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="RocketDivision.StarBurnX">
+      <Guid>{93CBA48A-1C58-4648-B22D-8F3588CB8D95}</Guid>
+      <VersionMajor>15</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

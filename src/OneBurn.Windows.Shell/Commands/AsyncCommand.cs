@@ -3,7 +3,7 @@ using System.ServiceModel.Dispatcher;
 using System.Threading.Tasks;
 using OneBurn.Core;
 
-namespace OneBurn.Windows.Shell
+namespace OneBurn.Windows.Shell.Commands
 {
     public class AsyncCommand<T> : IAsyncCommand<T>
     {

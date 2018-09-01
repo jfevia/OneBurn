@@ -134,6 +134,17 @@ namespace OneBurn.Windows.Shell
         }
 
         /// <summary>
+        ///     Reloads the data asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        public virtual async Task ReloadDataAsync()
+        {
+            IsBusy = true;
+            await LoadDataAsync();
+            IsBusy = false;
+        }
+
+        /// <summary>
         ///     Loads the data asynchronously.
         /// </summary>
         /// <returns>The task.</returns>

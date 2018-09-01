@@ -58,5 +58,17 @@ namespace OneBurn.Windows.Wpf.Properties {
                 this["GeneralAppearanceTheme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("%CommonApplicationData%\\OneBurn\\odae.key")]
+        public string OpticalDriveAuthoringEngineKeyFilePath {
+            get {
+                return ((string)(this["OpticalDriveAuthoringEngineKeyFilePath"]));
+            }
+            set {
+                this["OpticalDriveAuthoringEngineKeyFilePath"] = value;
+            }
+        }
     }
 }
