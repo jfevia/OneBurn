@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using OneBurn.FileSystem;
 using OneBurn.Windows.Shell;
 using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Containers;
@@ -172,7 +172,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <returns>The directory items.</returns>
         private static async Task<IEnumerable<DirectoryItemViewModel>> GetDirectoryItems(string path)
         {
-            var directoryItems = await FileSystemService.Instance.GetDirectoryItemsAsync(path);
+            var directoryItems = await FileSystemService.Instance.GetDirectoriesAsync(path);
             return directoryItems.Select(ToViewModel);
         }
 
@@ -183,7 +183,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <returns>The file items.</returns>
         private static async Task<IEnumerable<FileItemViewModel>> GetFileItems(string path)
         {
-            var fileItems = await FileSystemService.Instance.GetFileItemsAsync(path);
+            var fileItems = await FileSystemService.Instance.GetFilesAsync(path);
             return fileItems.Select(ToViewModel);
         }
 
@@ -192,12 +192,12 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The view model.</returns>
-        private static DirectoryItemViewModel ToViewModel(DirectoryItem item)
+        private static DirectoryItemViewModel ToViewModel(DirectoryInfo item)
         {
             return new DirectoryItemViewModel
             {
                 Name = item.Name,
-                Path = item.Path,
+                Path = item.FullName,
                 ChildDirectories = new ObservableCollection<DirectoryItemViewModelBase>
                 {
                     new DirectoryItemViewModel
@@ -213,12 +213,13 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The view model.</returns>
-        private static FileItemViewModel ToViewModel(FileItem item)
+        private static FileItemViewModel ToViewModel(FileInfo item)
         {
             return new FileItemViewModel
             {
                 Name = item.Name,
-                Path = item.Path
+                Path = item.FullName,
+                Size = item.Length
             };
         }
     }

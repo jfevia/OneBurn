@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using OneBurn.FileSystem;
 
 namespace OneBurn.Windows.Wpf.Services
 {
@@ -25,85 +24,66 @@ namespace OneBurn.Windows.Wpf.Services
         /// </value>
         public static FileSystemService Instance { get; }
 
+
         /// <inheritdoc />
         /// <summary>
-        ///     Gets the directory items asynchronously.
+        ///     Gets the directories asynchronously.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The directory items.</returns>
-        public async Task<IEnumerable<DirectoryItem>> GetDirectoryItemsAsync(string path)
+        /// <returns>
+        ///     The directories.
+        /// </returns>
+        public async Task<IEnumerable<DirectoryInfo>> GetDirectoriesAsync(string path)
         {
-            return await Task.Run(() => GetDirectoryItems(path));
+            return await Task.Run(() => GetDirectories(path));
         }
 
         /// <inheritdoc />
         /// <summary>
-        ///     Gets the directory items.
+        ///     Gets the directories.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The directory items.</returns>
-        public IEnumerable<DirectoryItem> GetDirectoryItems(string path)
+        /// <returns>
+        ///     The directories.
+        /// </returns>
+        public IEnumerable<DirectoryInfo> GetDirectories(string path)
         {
             try
             {
-                var directoryInfos = Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly).Select(s => new DirectoryInfo(s));
-                var directoryItems = new List<DirectoryItem>();
-                foreach (var directoryInfo in directoryInfos)
-                {
-                    var directoryItem = new DirectoryItem
-                    {
-                        Name = directoryInfo.Name,
-                        Path = directoryInfo.FullName
-                    };
-                    directoryItems.Add(directoryItem);
-                }
-
-                return directoryItems;
+                return Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly).Select(s => new DirectoryInfo(s));
             }
             catch
             {
-                return Enumerable.Empty<DirectoryItem>();
+                return Enumerable.Empty<DirectoryInfo>();
             }
         }
 
         /// <inheritdoc />
         /// <summary>
-        ///     Gets the file items asynchronously.
+        ///     Gets the files asynchronously.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The file items.</returns>
-        public async Task<IEnumerable<FileItem>> GetFileItemsAsync(string path)
+        /// <returns>The files.</returns>
+        public async Task<IEnumerable<FileInfo>> GetFilesAsync(string path)
         {
-            return await Task.Run(() => GetFileItems(path));
+            return await Task.Run(() => GetFiles(path));
         }
 
         /// <inheritdoc />
         /// <summary>
-        ///     Gets the file items.
+        ///     Gets the files.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The file items.</returns>
-        public IEnumerable<FileItem> GetFileItems(string path)
+        /// <returns>The files.</returns>
+        public IEnumerable<FileInfo> GetFiles(string path)
         {
             try
             {
-                var fileInfos = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly).Select(s => new FileInfo(s));
-                var fileItems = new List<FileItem>();
-                foreach (var fileInfo in fileInfos)
-                {
-                    var directoryItem = new FileItem
-                    {
-                        Name = fileInfo.Name,
-                        Path = fileInfo.FullName
-                    };
-                    fileItems.Add(directoryItem);
-                }
-
-                return fileItems;
+                return Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly).Select(s => new FileInfo(s));
             }
             catch
             {
-                return Enumerable.Empty<FileItem>();
+                return Enumerable.Empty<FileInfo>();
             }
         }
     }

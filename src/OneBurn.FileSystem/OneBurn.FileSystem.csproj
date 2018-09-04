@@ -41,9 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryItem.cs" />
-    <Compile Include="FileItem.cs" />
-    <Compile Include="FileSystemItem.cs" />
     <Compile Include="IDirectoryItem.cs" />
     <Compile Include="IFileItem.cs" />
     <Compile Include="IFileSystemItem.cs" />

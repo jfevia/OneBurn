@@ -70,5 +70,17 @@ namespace OneBurn.Windows.Wpf.Properties {
                 this["OpticalDriveAuthoringEngineKeyFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("STARBURN_WRITE_MODE_AUTO")]
+        public global::RocketDivision.StarBurnX.STARBURN_WRITE_MODE BurnDefaultWriteMode {
+            get {
+                return ((global::RocketDivision.StarBurnX.STARBURN_WRITE_MODE)(this["BurnDefaultWriteMode"]));
+            }
+            set {
+                this["BurnDefaultWriteMode"] = value;
+            }
+        }
     }
 }

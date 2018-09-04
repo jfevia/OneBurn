@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using OneBurn.Windows.Shell.Burning;
 using OneBurn.Windows.Shell.Commands;
+using OneBurn.Windows.Wpf.Properties;
 using OneBurn.Windows.Wpf.Services;
 using RocketDivision.StarBurnX;
 using Telerik.Windows.Controls;
@@ -14,9 +15,15 @@ namespace OneBurn.Windows.Wpf.Burning
     internal sealed class BurnImageViewModel : BurnImageViewModelBase
     {
         private ObservableCollection<Drive> _drives;
+        private bool _eject;
+        private bool _finalizeDisc;
         private Drive _selectedDrive;
         private string _selectedFilePath;
         private DriveSpeed _selectedWriteSpeed;
+        private bool _shutdown;
+        private bool _testDisc;
+        private bool _verifyDisc;
+        private ObservableCollection<STARBURN_WRITE_MODE> _writeModes;
         private ObservableCollection<DriveSpeed> _writeSpeeds;
 
         /// <summary>
@@ -30,7 +37,25 @@ namespace OneBurn.Windows.Wpf.Burning
             BrowseFilePathCommand = new DelegateCommand(BrowseFilePath);
             RefreshDrivesCommand = new AsyncCommand(ReloadDrivesAsync);
             LoadDriveSpeedsCommand = new AsyncCommand(LoadWriteSpeedsAsync);
+            LoadDriveWriteModesCommand = new AsyncCommand(LoadWriteModesAsync);
+            BurnCommand = new AsyncCommand(BurnAsync);
         }
+
+        /// <summary>
+        ///     Gets the load drive write modes command.
+        /// </summary>
+        /// <value>
+        ///     The load drive write modes command.
+        /// </value>
+        public ICommand LoadDriveWriteModesCommand { get; }
+
+        /// <summary>
+        ///     Gets the burn command.
+        /// </summary>
+        /// <value>
+        ///     The burn command.
+        /// </value>
+        public ICommand BurnCommand { get; }
 
         /// <summary>
         ///     Gets or sets the selected write speed.
@@ -75,7 +100,7 @@ namespace OneBurn.Windows.Wpf.Burning
         /// <summary>
         ///     Gets the refresh drives command.
         /// </summary>
-        public IAsyncCommand RefreshDrivesCommand { get; }
+        public ICommand RefreshDrivesCommand { get; }
 
         /// <summary>
         ///     Gets or sets the drives.
@@ -102,6 +127,18 @@ namespace OneBurn.Windows.Wpf.Burning
         }
 
         /// <summary>
+        ///     Gets or sets the write modes.
+        /// </summary>
+        /// <value>
+        ///     The write modes.
+        /// </value>
+        public ObservableCollection<STARBURN_WRITE_MODE> WriteModes
+        {
+            get => _writeModes;
+            set => Set(ref _writeModes, value);
+        }
+
+        /// <summary>
         ///     Gets or sets the selected file path.
         /// </summary>
         /// <value>
@@ -114,6 +151,75 @@ namespace OneBurn.Windows.Wpf.Burning
         }
 
         /// <summary>
+        ///     Gets or sets a value indicating whether [finalize disc].
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if [finalize disc]; otherwise, <see langword="false" />.
+        /// </value>
+        public bool FinalizeDisc
+        {
+            get => _finalizeDisc;
+            set => Set(ref _finalizeDisc, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether [verify disc].
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if [verify disc]; otherwise, <see langword="false" />.
+        /// </value>
+        public bool VerifyDisc
+        {
+            get => _verifyDisc;
+            set => Set(ref _verifyDisc, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="BurnImageViewModel" /> is eject.
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if eject; otherwise, <see langword="false" />.
+        /// </value>
+        public bool Eject
+        {
+            get => _eject;
+            set => Set(ref _eject, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="BurnImageViewModel" /> is shutdown.
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if shutdown; otherwise, <see langword="false" />.
+        /// </value>
+        public bool Shutdown
+        {
+            get => _shutdown;
+            set => Set(ref _shutdown, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether [test disc].
+        /// </summary>
+        /// <value>
+        ///     <see langword="true" /> if [test disc]; otherwise, <see langword="false" />.
+        /// </value>
+        public bool TestDisc
+        {
+            get => _testDisc;
+            set => Set(ref _testDisc, value);
+        }
+
+        /// <summary>
+        ///     Burns the image asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        private async Task BurnAsync()
+        {
+            await RadOdaeService.Instance.Burn(_selectedDrive, _selectedFilePath, _selectedWriteSpeed, Settings.Default.BurnDefaultWriteMode, TestDisc);
+        }
+
+        /// <summary>
         ///     Loads the write speeds asynchronously.
         /// </summary>
         /// <returns>The task.</returns>
@@ -123,6 +229,15 @@ namespace OneBurn.Windows.Wpf.Burning
                 return;
 
             WriteSpeeds = new ObservableCollection<DriveSpeed>(await RadOdaeService.Instance.GetDriveWriteSpeedsAsync(_selectedDrive.DriveInfo));
+        }
+
+        /// <summary>
+        ///     Loads the write modes asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        private async Task LoadWriteModesAsync()
+        {
+            WriteModes = new ObservableCollection<STARBURN_WRITE_MODE>(await RadOdaeService.Instance.GetDriveWriteModesAsync(_selectedDrive.DriveInfo));
         }
 
         /// <summary>

@@ -41,68 +41,69 @@
             </Grid>
         </HierarchicalDataTemplate>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="60*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="30*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*" />
-            <ColumnDefinition Width="60*" />
-        </Grid.ColumnDefinitions>
-        <telerik:RadMenu Grid.Row="0"
-                         Grid.Column="0"
-                         Grid.ColumnSpan="2"
-                         ItemsSource="{Binding PrimaryViewModels}">
-            <telerik:RadMenu.ItemContainerStyle>
-                <Style TargetType="telerik:RadMenuItem">
-                    <Setter Property="Header" Value="{Binding Title}" />
-                    <Setter Property="ItemsSource" Value="{Binding ViewModels}" />
-                    <Setter Property="Command" Value="{Binding Command}" />
-                </Style>
-            </telerik:RadMenu.ItemContainerStyle>
-        </telerik:RadMenu>
-        <ScrollViewer Grid.Row="1"
-                      Grid.Column="0"
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto">
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="60*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="60*" />
+            </Grid.ColumnDefinitions>
+            <telerik:RadMenu Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="2"
+                             ItemsSource="{Binding PrimaryViewModels}">
+                <telerik:RadMenu.ItemContainerStyle>
+                    <Style TargetType="telerik:RadMenuItem">
+                        <Setter Property="Header" Value="{Binding Title}" />
+                        <Setter Property="ItemsSource" Value="{Binding ViewModels}" />
+                        <Setter Property="Command" Value="{Binding Command}" />
+                    </Style>
+                </telerik:RadMenu.ItemContainerStyle>
+            </telerik:RadMenu>
             <telerik:RadTreeView IsLoadOnDemandEnabled="True"
-                                 ItemTemplate="{StaticResource DirectoryItemTemplate}"
-                                 ItemsSource="{Binding DirectoryItems}"
-                                 SelectedItem="{Binding SelectedDirectoryItem}"
-                                 SelectionMode="Single">
+                                     Grid.Row="1"
+                          Grid.Column="0"
+                                     ItemTemplate="{StaticResource DirectoryItemTemplate}"
+                                     ItemsSource="{Binding DirectoryItems}"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     SelectedItem="{Binding SelectedDirectoryItem, Mode=TwoWay}"
+                                     SelectionMode="Single">
                 <telerik:EventToCommandBehavior.EventBindings>
                     <telerik:EventBinding Command="{Binding LoadChildDirectoriesCommand}"
-                                          EventName="Expanded"
-                                          PassEventArgsToCommand="True"
-                                          RaiseOnHandledEvents="True" />
+                                              EventName="Expanded"
+                                              PassEventArgsToCommand="True"
+                                              RaiseOnHandledEvents="True" />
                     <telerik:EventBinding Command="{Binding LoadChildFilesCommand}"
-                                          EventName="SelectionChanged"
-                                          PassEventArgsToCommand="False"
-                                          RaiseOnHandledEvents="True" />
+                                              EventName="SelectionChanged"
+                                              PassEventArgsToCommand="False"
+                                              RaiseOnHandledEvents="True" />
                 </telerik:EventToCommandBehavior.EventBindings>
             </telerik:RadTreeView>
-        </ScrollViewer>
-        <telerik:RadGridView Grid.Row="1"
-                             Grid.Column="1"
-                             ItemsSource="{Binding SelectedDirectoryItem.ChildFiles}"
-                             SelectedItem="{Binding SelectedFileItem}" />
-        <telerik:RadToolBar Grid.Row="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            ItemsSource="{Binding SecondaryViewModels}">
-            <telerik:RadToolBar.ItemTemplate>
-                <DataTemplate DataType="containers:CommandContainerViewModel">
-                    <telerik:RadMenuItem Command="{Binding Command}"
-                                         Header="{Binding Title}" />
-                </DataTemplate>
-            </telerik:RadToolBar.ItemTemplate>
-        </telerik:RadToolBar>
-        <telerik:RadTreeView Grid.Row="3"
-                             Grid.Column="0" />
-        <telerik:RadGridView Grid.Row="3"
-                             Grid.Column="1" />
-    </Grid>
+            <telerik:RadGridView Grid.Row="1"
+                                 Grid.Column="1"
+                                 ItemsSource="{Binding SelectedDirectoryItem.ChildFiles}"
+                                 SelectedItem="{Binding SelectedFileItem}" />
+            <telerik:RadToolBar Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                ItemsSource="{Binding SecondaryViewModels}">
+                <telerik:RadToolBar.ItemTemplate>
+                    <DataTemplate DataType="containers:CommandContainerViewModel">
+                        <telerik:RadMenuItem Command="{Binding Command}"
+                                             Header="{Binding Title}" />
+                    </DataTemplate>
+                </telerik:RadToolBar.ItemTemplate>
+            </telerik:RadToolBar>
+            <telerik:RadTreeView Grid.Row="3"
+                                 Grid.Column="0" />
+            <telerik:RadGridView Grid.Row="3"
+                                 Grid.Column="1" />
+        </Grid>
+    </telerik:RadBusyIndicator>
 </UserControl>

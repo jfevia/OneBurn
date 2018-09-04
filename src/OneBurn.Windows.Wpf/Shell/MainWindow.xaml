@@ -37,12 +37,9 @@
             </Grid.ColumnDefinitions>
             <shell:MainMenu Grid.Row="0"
                             Grid.Column="0" />
-            <ScrollViewer Grid.Row="0"
-                          Grid.Column="1"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <ContentControl Content="{Binding CurrentViewModel}" />
-            </ScrollViewer>
+            <ContentControl Grid.Row="0"
+                            Grid.Column="1"
+                            Content="{Binding CurrentViewModel}" />
         </Grid>
     </telerik:RadBusyIndicator>
 </telerik:RadWindow>

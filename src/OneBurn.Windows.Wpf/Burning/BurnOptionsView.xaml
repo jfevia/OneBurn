@@ -595,18 +595,20 @@
             </burning:BurnOptionsTemplateSelector>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{telerik:MaterialResource ResourceKey=PrimaryBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ContentControl Grid.Row="0"
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Content="{Binding CurrentViewModel}"
-                        ContentTemplateSelector="{StaticResource BurnOptionsViewTemplateSelector}" />
-    </Grid>
+    <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid Background="{telerik:MaterialResource ResourceKey=PrimaryBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ContentControl Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Content="{Binding CurrentViewModel}"
+                            ContentTemplateSelector="{StaticResource BurnOptionsViewTemplateSelector}" />
+        </Grid>
+    </telerik:RadBusyIndicator>
 </UserControl>

@@ -1,37 +1,37 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
-using OneBurn.FileSystem;
 
 namespace OneBurn.Windows.Wpf.Services
 {
     internal interface IFileSystemService
     {
         /// <summary>
-        ///     Gets the directory items asynchronously.
+        ///     Gets the directories asynchronously.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The directory items.</returns>
-        Task<IEnumerable<DirectoryItem>> GetDirectoryItemsAsync(string path);
+        /// <returns>The directories.</returns>
+        Task<IEnumerable<DirectoryInfo>> GetDirectoriesAsync(string path);
 
         /// <summary>
-        ///     Gets the directory items.
+        ///     Gets the directories.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The directory items.</returns>
-        IEnumerable<DirectoryItem> GetDirectoryItems(string path);
+        /// <returns>The directories.</returns>
+        IEnumerable<DirectoryInfo> GetDirectories(string path);
 
         /// <summary>
-        ///     Gets the file items asynchronously.
+        ///     Gets the files asynchronously.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The file items.</returns>
-        Task<IEnumerable<FileItem>> GetFileItemsAsync(string path);
+        /// <returns>The files.</returns>
+        Task<IEnumerable<FileInfo>> GetFilesAsync(string path);
 
         /// <summary>
-        ///     Gets the file items.
+        ///     Gets the files.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns>The file items.</returns>
-        IEnumerable<FileItem> GetFileItems(string path);
+        /// <returns>The files.</returns>
+        IEnumerable<FileInfo> GetFiles(string path);
     }
 }

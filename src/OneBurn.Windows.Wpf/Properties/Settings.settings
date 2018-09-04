@@ -14,5 +14,8 @@
     <Setting Name="OpticalDriveAuthoringEngineKeyFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">%CommonApplicationData%\OneBurn\odae.key</Value>
     </Setting>
+    <Setting Name="BurnDefaultWriteMode" Type="RocketDivision.StarBurnX.STARBURN_WRITE_MODE" Scope="User">
+      <Value Profile="(Default)">STARBURN_WRITE_MODE_AUTO</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
