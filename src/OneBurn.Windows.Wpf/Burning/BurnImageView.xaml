@@ -209,24 +209,28 @@
                               Margin="0,5"
                               Content="Finalize"
                               IsChecked="{Binding FinalizeDisc}"
+                              IsEnabled="False"
                               Style="{StaticResource CheckBoxCustomStyle}" />
                     <CheckBox Grid.Row="10"
                               Grid.Column="0"
                               Margin="0,5"
                               Content="Verify"
                               IsChecked="{Binding VerifyDisc}"
+                              IsEnabled="False"
                               Style="{StaticResource CheckBoxCustomStyle}" />
                     <CheckBox Grid.Row="11"
                               Grid.Column="0"
                               Margin="0,5"
                               Content="Eject"
                               IsChecked="{Binding Eject}"
+                              IsEnabled="False"
                               Style="{StaticResource CheckBoxCustomStyle}" />
                     <CheckBox Grid.Row="12"
                               Grid.Column="0"
                               Margin="0,5"
                               Content="Shutdown"
                               IsChecked="{Binding Shutdown}"
+                              IsEnabled="False"
                               Style="{StaticResource CheckBoxCustomStyle}" />
                 </Grid>
             </ScrollViewer>
