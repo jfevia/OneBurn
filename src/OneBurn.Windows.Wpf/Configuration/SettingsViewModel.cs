@@ -32,7 +32,8 @@ namespace OneBurn.Windows.Wpf.Configuration
 
             ViewModels = new ObservableCollection<ContextViewModelBase>
             {
-                new GeneralSettingsViewModel()
+                new GeneralSettingsViewModel(),
+                new WriteSettingsViewModel()
             };
 
             await OnSetCurrentViewModel(ViewModels.FirstOrDefault());

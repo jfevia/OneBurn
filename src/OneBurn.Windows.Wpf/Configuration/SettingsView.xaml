@@ -6,6 +6,9 @@
         <DataTemplate DataType="{x:Type configuration:GeneralSettingsViewModel}">
             <configuration:GeneralSettingsView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type configuration:WriteSettingsViewModel}">
+            <configuration:WriteSettingsView />
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

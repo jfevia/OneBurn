@@ -17,5 +17,17 @@
     <Setting Name="BurnDefaultWriteMode" Type="RocketDivision.StarBurnX.STARBURN_WRITE_MODE" Scope="User">
       <Value Profile="(Default)">STARBURN_WRITE_MODE_AUTO</Value>
     </Setting>
+    <Setting Name="BurnRememberNumberOfCopies" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="BurnCustomNumberOfCopies" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="AutoSaveTime" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:05</Value>
+    </Setting>
+    <Setting Name="BurnDefaultNumberOfCopies" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

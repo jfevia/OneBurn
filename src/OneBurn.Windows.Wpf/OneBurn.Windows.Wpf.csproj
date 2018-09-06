@@ -89,6 +89,10 @@
       <DependentUpon>CreateImageFromMediaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Burning\CreateImageFromMediaViewModel.cs" />
+    <Compile Include="Configuration\WriteSettingsViewModel.cs" />
+    <Compile Include="Configuration\WriteSettingsView.xaml.cs">
+      <DependentUpon>WriteSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\GeneralSettingsView.xaml.cs">
       <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,10 @@
     <Page Include="Burning\CreateImageFromMediaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configuration\WriteSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configuration\GeneralSettingsView.xaml">
       <SubType>Designer</SubType>

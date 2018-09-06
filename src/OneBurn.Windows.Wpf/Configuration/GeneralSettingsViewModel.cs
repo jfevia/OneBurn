@@ -66,6 +66,7 @@ namespace OneBurn.Windows.Wpf.Configuration
             {
                 RetryCount = Settings.Default.GeneralNetworkRetryCount;
                 TimeSpanBetweenRetries = Settings.Default.GeneralNetworkTimeSpanBetweenRetries;
+                TimeSpanBetweenAutoSaves = Settings.Default.AutoSaveTime;
 
                 _themes = new ObservableCollection<Theme>
                 {
@@ -96,6 +97,7 @@ namespace OneBurn.Windows.Wpf.Configuration
             Settings.Default.GeneralAppearanceTheme = _selectedTheme;
             Settings.Default.GeneralNetworkRetryCount = RetryCount;
             Settings.Default.GeneralNetworkTimeSpanBetweenRetries = TimeSpanBetweenRetries;
+            Settings.Default.AutoSaveTime = TimeSpanBetweenAutoSaves;
             Settings.Default.Save();
 
             RadMessageBoxService.Instance.Show("OneBurn", "OneBurn will restart now in order for the changes to take effect.", MessageBoxButton.OK, MessageBoxImage.Information);

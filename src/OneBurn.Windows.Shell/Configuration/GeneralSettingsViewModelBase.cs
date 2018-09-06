@@ -7,6 +7,7 @@ namespace OneBurn.Windows.Shell.Configuration
     {
         private int _retryCount;
         private TimeSpan _timeSpanBetweenRetries;
+        private TimeSpan _timeSpanBetweenAutoSaves;
 
         /// <summary>
         ///     Gets or sets the retry count.
@@ -38,6 +39,18 @@ namespace OneBurn.Windows.Shell.Configuration
         {
             get => _timeSpanBetweenRetries;
             set => Set(ref _timeSpanBetweenRetries, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the time span between automatic saves.
+        /// </summary>
+        /// <value>
+        ///     The time span between automatic saves.
+        /// </value>
+        public virtual TimeSpan TimeSpanBetweenAutoSaves
+        {
+            get => _timeSpanBetweenAutoSaves;
+            set => Set(ref _timeSpanBetweenAutoSaves, value);
         }
     }
 }

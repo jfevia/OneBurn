@@ -1,7 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Microsoft.Win32;
 using OneBurn.Windows.Shell.Burning;
 using OneBurn.Windows.Shell.Commands;
@@ -15,14 +19,10 @@ namespace OneBurn.Windows.Wpf.Burning
     internal sealed class BurnImageViewModel : BurnImageViewModelBase
     {
         private ObservableCollection<Drive> _drives;
-        private bool _eject;
-        private bool _finalizeDisc;
+        private bool _numberOfCopiesNotificationsSuspended;
         private Drive _selectedDrive;
-        private string _selectedFilePath;
         private DriveSpeed _selectedWriteSpeed;
-        private bool _shutdown;
-        private bool _testDisc;
-        private bool _verifyDisc;
+        private DispatcherTimer _settingsCacheSaveTimer;
         private ObservableCollection<STARBURN_WRITE_MODE> _writeModes;
         private ObservableCollection<DriveSpeed> _writeSpeeds;
 
@@ -67,6 +67,25 @@ namespace OneBurn.Windows.Wpf.Burning
         {
             get => _selectedWriteSpeed;
             set => Set(ref _selectedWriteSpeed, value);
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Gets or sets the number of copies.
+        /// </summary>
+        /// <value>
+        ///     The number of copies.
+        /// </value>
+        public override int NumberOfCopies
+        {
+            get => base.NumberOfCopies;
+            set
+            {
+                base.NumberOfCopies = value;
+
+                if (!_numberOfCopiesNotificationsSuspended)
+                    Settings.Default.BurnCustomNumberOfCopies = NumberOfCopies;
+            }
         }
 
         /// <summary>
@@ -139,84 +158,107 @@ namespace OneBurn.Windows.Wpf.Burning
         }
 
         /// <summary>
-        ///     Gets or sets the selected file path.
-        /// </summary>
-        /// <value>
-        ///     The selected file path.
-        /// </value>
-        public string SelectedFilePath
-        {
-            get => _selectedFilePath;
-            set => Set(ref _selectedFilePath, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether [finalize disc].
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if [finalize disc]; otherwise, <see langword="false" />.
-        /// </value>
-        public bool FinalizeDisc
-        {
-            get => _finalizeDisc;
-            set => Set(ref _finalizeDisc, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether [verify disc].
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if [verify disc]; otherwise, <see langword="false" />.
-        /// </value>
-        public bool VerifyDisc
-        {
-            get => _verifyDisc;
-            set => Set(ref _verifyDisc, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether this <see cref="BurnImageViewModel" /> is eject.
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if eject; otherwise, <see langword="false" />.
-        /// </value>
-        public bool Eject
-        {
-            get => _eject;
-            set => Set(ref _eject, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether this <see cref="BurnImageViewModel" /> is shutdown.
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if shutdown; otherwise, <see langword="false" />.
-        /// </value>
-        public bool Shutdown
-        {
-            get => _shutdown;
-            set => Set(ref _shutdown, value);
-        }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether [test disc].
-        /// </summary>
-        /// <value>
-        ///     <see langword="true" /> if [test disc]; otherwise, <see langword="false" />.
-        /// </value>
-        public bool TestDisc
-        {
-            get => _testDisc;
-            set => Set(ref _testDisc, value);
-        }
-
-        /// <summary>
         ///     Burns the image asynchronously.
         /// </summary>
         /// <returns>The task.</returns>
         private async Task BurnAsync()
         {
-            await RadOdaeService.Instance.Burn(_selectedDrive, _selectedFilePath, _selectedWriteSpeed, Settings.Default.BurnDefaultWriteMode, TestDisc);
+            ForceValidation();
+            if (HasErrors)
+            {
+                RadMessageBoxService.Instance.Show("Input Required", "Please, complete the required fields.", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var count = NumberOfCopies;
+            while (--count >= 0)
+            {
+                await RadOdaeService.Instance.Burn(_selectedDrive, SelectedFilePath, _selectedWriteSpeed, Settings.Default.BurnDefaultWriteMode, TestDisc);
+            }
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Validates the specified property name.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="validationErrors">The validation errors.</param>
+        /// <returns>
+        ///     <c>true</c> if the validation is passed; otherwise, <c>false</c>.
+        /// </returns>
+        protected override bool Validate(string propertyName, out HashSet<string> validationErrors)
+        {
+            validationErrors = new HashSet<string>();
+
+            switch (propertyName)
+            {
+                case nameof(SelectedFilePath):
+                    ValidateSelectedFilePath(validationErrors);
+                    break;
+                case nameof(SelectedDrive):
+                    ValidateSelectedDrive(validationErrors);
+                    break;
+                case nameof(SelectedWriteSpeed):
+                    ValidateSelectedWriteSpeed(validationErrors);
+                    break;
+                case nameof(NumberOfCopies):
+                    ValidateNumberOfCopies(validationErrors);
+                    break;
+            }
+
+            return validationErrors.Count == 0;
+        }
+
+        /// <summary>
+        ///     Validates the number of copies.
+        /// </summary>
+        /// <param name="validationErrors">The validation errors.</param>
+        private void ValidateNumberOfCopies(ICollection<string> validationErrors)
+        {
+            if (NumberOfCopies <= 0)
+                validationErrors.Add("The number of copies must be at least one");
+        }
+
+        /// <summary>
+        ///     Validates the selected write speed.
+        /// </summary>
+        /// <param name="validationErrors">The validation errors.</param>
+        private void ValidateSelectedWriteSpeed(ICollection<string> validationErrors)
+        {
+            if (_selectedWriteSpeed == null)
+                validationErrors.Add("Select the drive to use in the burning process");
+        }
+
+        /// <summary>
+        ///     Validates the selected drive.
+        /// </summary>
+        /// <param name="validationErrors">The validation errors.</param>
+        private void ValidateSelectedDrive(ICollection<string> validationErrors)
+        {
+            if (_selectedDrive == null)
+                validationErrors.Add("Select the drive to use in the burning process");
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Forces the validation.
+        /// </summary>
+        public override void ForceValidation()
+        {
+            Validate(nameof(SelectedFilePath));
+            Validate(nameof(SelectedDrive));
+            Validate(nameof(SelectedWriteSpeed));
+            Validate(nameof(NumberOfCopies));
+        }
+
+        /// <summary>
+        ///     Validates the selected file path.
+        /// </summary>
+        /// <param name="validationErrors">The validation errors.</param>
+        private void ValidateSelectedFilePath(ICollection<string> validationErrors)
+        {
+            if (string.IsNullOrWhiteSpace(SelectedFilePath))
+                validationErrors.Add("Select a file to burn");
         }
 
         /// <summary>
@@ -283,8 +325,72 @@ namespace OneBurn.Windows.Wpf.Burning
         protected override async Task LoadDataAsync()
         {
             await base.LoadDataAsync();
+
+            if (!Settings.Default.BurnRememberNumberOfCopies)
+            {
+                NumberOfCopies = Settings.Default.BurnDefaultNumberOfCopies;
+            }
+            else
+            {
+                SuspendNumberOfCopiesNotifications();
+                NumberOfCopies = Settings.Default.BurnCustomNumberOfCopies;
+                ResumeNumberOfCopiesNotifications();
+            }
+
             await LoadDrivesAsync();
             SelectFirstOrDefaultDrive();
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Initializes this instance asynchronously.
+        /// </summary>
+        /// <returns>
+        ///     The task.
+        /// </returns>
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+
+            if (Settings.Default.BurnRememberNumberOfCopies && _settingsCacheSaveTimer == null)
+            {
+                _settingsCacheSaveTimer = new DispatcherTimer();
+                _settingsCacheSaveTimer.Interval = Settings.Default.AutoSaveTime;
+                _settingsCacheSaveTimer.Tick += AutoSaveSettings;
+                _settingsCacheSaveTimer.Start();
+            }
+            else if (!Settings.Default.BurnRememberNumberOfCopies && _settingsCacheSaveTimer != null)
+            {
+                _settingsCacheSaveTimer.Stop();
+                _settingsCacheSaveTimer.Tick -= AutoSaveSettings;
+                _settingsCacheSaveTimer = null;
+            }
+        }
+
+        /// <summary>
+        ///     Automatics the save settings.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private static void AutoSaveSettings(object sender, EventArgs e)
+        {
+            Settings.Default.Save();
+        }
+
+        /// <summary>
+        ///     Resumes the number of copies notifications.
+        /// </summary>
+        private void ResumeNumberOfCopiesNotifications()
+        {
+            _numberOfCopiesNotificationsSuspended = false;
+        }
+
+        /// <summary>
+        ///     Suspends the number of copies notifications.
+        /// </summary>
+        private void SuspendNumberOfCopiesNotifications()
+        {
+            _numberOfCopiesNotificationsSuspended = true;
         }
 
         /// <summary>

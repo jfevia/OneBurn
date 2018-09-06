@@ -82,5 +82,53 @@ namespace OneBurn.Windows.Wpf.Properties {
                 this["BurnDefaultWriteMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BurnRememberNumberOfCopies {
+            get {
+                return ((bool)(this["BurnRememberNumberOfCopies"]));
+            }
+            set {
+                this["BurnRememberNumberOfCopies"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BurnCustomNumberOfCopies {
+            get {
+                return ((int)(this["BurnCustomNumberOfCopies"]));
+            }
+            set {
+                this["BurnCustomNumberOfCopies"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:00:05")]
+        public global::System.TimeSpan AutoSaveTime {
+            get {
+                return ((global::System.TimeSpan)(this["AutoSaveTime"]));
+            }
+            set {
+                this["AutoSaveTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BurnDefaultNumberOfCopies {
+            get {
+                return ((int)(this["BurnDefaultNumberOfCopies"]));
+            }
+            set {
+                this["BurnDefaultNumberOfCopies"] = value;
+            }
+        }
     }
 }
