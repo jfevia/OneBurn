@@ -22,8 +22,8 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <burning:BurnOptionsTemplateSelector x:Key="BurnOptionsImageTemplateSelector">
-                <burning:BurnOptionsTemplateSelector.DiscLayoutEditorTemplate>
+            <burning:BurnOptionTemplateSelector x:Key="BurnOptionIconTemplateSelector">
+                <burning:BurnOptionTemplateSelector.DiscLayoutEditorTemplate>
                     <DataTemplate DataType="{x:Type discLayout:DiscLayoutEditorViewModel}">
                         <Viewbox Width="56"
                                  Height="56"
@@ -119,8 +119,8 @@
                             </Canvas>
                         </Viewbox>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.DiscLayoutEditorTemplate>
-                <burning:BurnOptionsTemplateSelector.BurnImageTemplate>
+                </burning:BurnOptionTemplateSelector.DiscLayoutEditorTemplate>
+                <burning:BurnOptionTemplateSelector.BurnImageTemplate>
                     <DataTemplate DataType="{x:Type burning:BurnImageViewModel}">
                         <Viewbox Width="56"
                                  Height="56"
@@ -216,8 +216,8 @@
                             </Canvas>
                         </Viewbox>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.BurnImageTemplate>
-                <burning:BurnOptionsTemplateSelector.BurnFilesAndFoldersTemplate>
+                </burning:BurnOptionTemplateSelector.BurnImageTemplate>
+                <burning:BurnOptionTemplateSelector.BurnFilesAndFoldersTemplate>
                     <DataTemplate DataType="{x:Type burning:BurnFilesAndFoldersViewModel}">
                         <Viewbox Width="56"
                                  Height="56"
@@ -313,8 +313,8 @@
                             </Canvas>
                         </Viewbox>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.BurnFilesAndFoldersTemplate>
-                <burning:BurnOptionsTemplateSelector.CreateImageFromMediaTemplate>
+                </burning:BurnOptionTemplateSelector.BurnFilesAndFoldersTemplate>
+                <burning:BurnOptionTemplateSelector.CreateImageFromMediaTemplate>
                     <DataTemplate DataType="{x:Type burning:CreateImageFromMediaViewModel}">
                         <Viewbox Width="56"
                                  Height="56"
@@ -410,8 +410,8 @@
                             </Canvas>
                         </Viewbox>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.CreateImageFromMediaTemplate>
-                <burning:BurnOptionsTemplateSelector.CreateImageFromFilesAndFoldersTemplate>
+                </burning:BurnOptionTemplateSelector.CreateImageFromMediaTemplate>
+                <burning:BurnOptionTemplateSelector.CreateImageFromFilesAndFoldersTemplate>
                     <DataTemplate DataType="{x:Type burning:CreateImageFromFilesAndFoldersViewModel}">
                         <Viewbox Width="56"
                                  Height="56"
@@ -507,20 +507,20 @@
                             </Canvas>
                         </Viewbox>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.CreateImageFromFilesAndFoldersTemplate>
-            </burning:BurnOptionsTemplateSelector>
-            <burning:BurnOptionsTemplateSelector x:Key="BurnOptionsViewTemplateSelector">
-                <burning:BurnOptionsTemplateSelector.DiscLayoutEditorTemplate>
+                </burning:BurnOptionTemplateSelector.CreateImageFromFilesAndFoldersTemplate>
+            </burning:BurnOptionTemplateSelector>
+            <burning:BurnOptionTemplateSelector x:Key="BurnOptionViewTemplateSelector">
+                <burning:BurnOptionTemplateSelector.DiscLayoutEditorTemplate>
                     <DataTemplate DataType="{x:Type discLayout:DiscLayoutEditorViewModel}">
                         <discLayout:DiscLayoutEditorView />
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.DiscLayoutEditorTemplate>
-                <burning:BurnOptionsTemplateSelector.BurnImageTemplate>
+                </burning:BurnOptionTemplateSelector.DiscLayoutEditorTemplate>
+                <burning:BurnOptionTemplateSelector.BurnImageTemplate>
                     <DataTemplate>
                         <burning:BurnImageView />
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.BurnImageTemplate>
-                <burning:BurnOptionsTemplateSelector.DefaultTemplate>
+                </burning:BurnOptionTemplateSelector.BurnImageTemplate>
+                <burning:BurnOptionTemplateSelector.DefaultTemplate>
                     <DataTemplate DataType="containers:SingleContainerViewModel">
                         <StackPanel Margin="10"
                                     VerticalAlignment="Top"
@@ -568,7 +568,7 @@
                                                                     Width="70"
                                                                     Height="70"
                                                                     Content="{Binding}"
-                                                                    ContentTemplateSelector="{StaticResource BurnOptionsImageTemplateSelector}" />
+                                                                    ContentTemplateSelector="{StaticResource BurnOptionIconTemplateSelector}" />
                                                     <StackPanel Grid.Row="0"
                                                                 Grid.Column="1"
                                                                 Width="250"
@@ -591,8 +591,8 @@
                             </ItemsControl>
                         </StackPanel>
                     </DataTemplate>
-                </burning:BurnOptionsTemplateSelector.DefaultTemplate>
-            </burning:BurnOptionsTemplateSelector>
+                </burning:BurnOptionTemplateSelector.DefaultTemplate>
+            </burning:BurnOptionTemplateSelector>
         </ResourceDictionary>
     </UserControl.Resources>
     <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}">
@@ -608,7 +608,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             Content="{Binding CurrentViewModel}"
-                            ContentTemplateSelector="{StaticResource BurnOptionsViewTemplateSelector}" />
+                            ContentTemplateSelector="{StaticResource BurnOptionViewTemplateSelector}" />
         </Grid>
     </telerik:RadBusyIndicator>
 </UserControl>

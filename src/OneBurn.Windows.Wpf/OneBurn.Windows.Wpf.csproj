@@ -76,7 +76,7 @@
       <DependentUpon>BurnImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Burning\BurnImageViewModel.cs" />
-    <Compile Include="Burning\BurnOptionsContentTemplateSelector.cs" />
+    <Compile Include="Burning\BurnOptionTemplateSelector.cs" />
     <Compile Include="Burning\BurnOptionsView.xaml.cs">
       <DependentUpon>BurnOptionsView.xaml</DependentUpon>
     </Compile>
@@ -107,14 +107,19 @@
     <Compile Include="Containers\CommandContainerViewModel.cs" />
     <Compile Include="Converters\DriveSpeedToStringConverter.cs" />
     <Compile Include="Converters\DriveInfoToStringConverter.cs" />
+    <Compile Include="Converters\FileSizeToStringConverter.cs" />
     <Compile Include="Dashboard\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dashboard\DashboardViewModel.cs" />
+    <Compile Include="Providers\RadDropObject.cs" />
+    <Compile Include="DiscLayout\LayoutNodeTemplateSelector.cs" />
     <Compile Include="DiscLayout\DiscLayoutEditorView.xaml.cs">
       <DependentUpon>DiscLayoutEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DiscLayout\DiscLayoutEditorViewModel.cs" />
+    <Compile Include="DiscLayout\LayoutFolderViewModel.cs" />
+    <Compile Include="DiscLayout\LayoutRootViewModel.cs" />
     <Compile Include="FileSystem\DirectoryItemViewModel.cs" />
     <Compile Include="FileSystem\FileItemViewModel.cs" />
     <Compile Include="FileSystem\FileSystemItemViewModel.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="Services\IThemeService.cs" />
     <Compile Include="Services\RadApplicationService.cs" />
     <Compile Include="Services\RadDialogService.cs" />
+    <Compile Include="Providers\RadDropServiceProvider.cs" />
     <Compile Include="Services\RadMessageBoxService.cs" />
     <Compile Include="Services\RadOdaeService.cs" />
     <Compile Include="Services\RadThemeService.cs" />
@@ -249,9 +255,17 @@
       <Project>{0a76d043-d2b4-466e-9bdb-671edf232d55}</Project>
       <Name>OneBurn.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OneBurn.DiscLayout\OneBurn.DiscLayout.csproj">
+      <Project>{7932a99c-2bbc-4988-ba47-c9d19c293440}</Project>
+      <Name>OneBurn.DiscLayout</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OneBurn.FileSystem\OneBurn.FileSystem.csproj">
       <Project>{f07655a1-1b83-48b7-ad80-c95a7d38464c}</Project>
       <Name>OneBurn.FileSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneBurn.Windows.Controls.GridView\OneBurn.Windows.Controls.GridView.csproj">
+      <Project>{adbad2c6-f138-4c27-8713-45d18fe5150d}</Project>
+      <Name>OneBurn.Windows.Controls.GridView</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneBurn.Windows.Controls\OneBurn.Windows.Controls.csproj">
       <Project>{16cfe17d-fbba-4c56-a6e7-d51cda177ce0}</Project>

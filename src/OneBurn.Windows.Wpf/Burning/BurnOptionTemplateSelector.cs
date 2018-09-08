@@ -4,7 +4,7 @@ using OneBurn.Windows.Wpf.DiscLayout;
 
 namespace OneBurn.Windows.Wpf.Burning
 {
-    internal class BurnOptionsTemplateSelector : DataTemplateSelector
+    internal class BurnOptionTemplateSelector : DataTemplateSelector
     {
         /// <summary>
         ///     Gets or sets the burn image template.
@@ -66,26 +66,21 @@ namespace OneBurn.Windows.Wpf.Burning
         /// </returns>
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item == null)
-                return DefaultTemplate;
-
-            var type = item.GetType();
-            if (type == typeof(BurnImageViewModel))
-                return BurnImageTemplate;
-
-            if (type == typeof(BurnFilesAndFoldersViewModel))
-                return BurnFilesAndFoldersTemplate;
-
-            if (type == typeof(CreateImageFromMediaViewModel))
-                return CreateImageFromMediaTemplate;
-
-            if (type == typeof(CreateImageFromFilesAndFoldersViewModel))
-                return CreateImageFromFilesAndFoldersTemplate;
-
-            if (type == typeof(DiscLayoutEditorViewModel))
-                return DiscLayoutEditorTemplate;
-
-            return DefaultTemplate;
+            switch (item)
+            {
+                case BurnImageViewModel _:
+                    return BurnImageTemplate;
+                case BurnFilesAndFoldersViewModel _:
+                    return BurnFilesAndFoldersTemplate;
+                case CreateImageFromMediaViewModel _:
+                    return CreateImageFromMediaTemplate;
+                case CreateImageFromFilesAndFoldersViewModel _:
+                    return CreateImageFromFilesAndFoldersTemplate;
+                case DiscLayoutEditorViewModel _:
+                    return DiscLayoutEditorTemplate;
+                default:
+                    return DefaultTemplate;
+            }
         }
     }
 }

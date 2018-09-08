@@ -7,7 +7,7 @@ using System.Windows.Threading;
 using Telerik.Windows.Controls.GridView;
 using GridViewColumn = Telerik.Windows.Controls.GridViewColumn;
 
-namespace OneBurn.Windows.Controls
+namespace OneBurn.Windows.Controls.GridView
 {
     public class GridViewNumberColumn : GridViewColumn
     {

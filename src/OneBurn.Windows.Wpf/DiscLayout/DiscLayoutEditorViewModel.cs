@@ -10,6 +10,7 @@ using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Containers;
 using OneBurn.Windows.Shell.DiscLayout;
 using OneBurn.Windows.Shell.FileSystem;
+using OneBurn.Windows.Shell.WindowsApi;
 using OneBurn.Windows.Wpf.Containers;
 using OneBurn.Windows.Wpf.FileSystem;
 using OneBurn.Windows.Wpf.Services;
@@ -89,6 +90,15 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         protected override async Task LoadDataAsync()
         {
             await base.LoadDataAsync();
+
+            LayoutRoot = new ObservableCollection<LayoutNodeViewModelBase>
+            {
+                new LayoutRootViewModel
+                {
+                    Title = "Root"
+                }
+            };
+            SelectedLayoutNode = LayoutRoot.FirstOrDefault();
 
             PrimaryViewModels = new ObservableCollection<ContextViewModelBase>
             {
@@ -219,7 +229,10 @@ namespace OneBurn.Windows.Wpf.DiscLayout
             {
                 Name = item.Name,
                 Path = item.FullName,
-                Size = item.Length
+                Size = item.Length,
+                DateModified = item.LastWriteTime,
+                TypeName = Windows.Shell.WindowsApi.FileSystem.GetTypeFriendlyName(item.FullName),
+                Icon = IconManager.FindIconForFilename(item.FullName, false)
             };
         }
     }

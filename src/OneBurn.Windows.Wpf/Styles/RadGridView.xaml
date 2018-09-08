@@ -1,13 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-                    xmlns:controls="clr-namespace:OneBurn.Windows.Controls;assembly=OneBurn.Windows.Controls">
+                    xmlns:gridView="clr-namespace:OneBurn.Windows.Controls.GridView;assembly=OneBurn.Windows.Controls.GridView"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
     <Style x:Key="GridViewNumberStyle"
            TargetType="telerik:GridViewCell">
         <Setter Property="Background" Value="{telerik:MaterialResource ResourceKey=AccentNormalBrush}" />
         <Setter Property="Foreground" Value="{telerik:MaterialResource ResourceKey=MainBrush}" />
     </Style>
-    <Style TargetType="controls:GridViewNumberColumn">
+    <Style TargetType="gridView:GridViewNumberColumn">
         <Setter Property="CellStyle" Value="{StaticResource GridViewNumberStyle}" />
+    </Style>
+    <Style x:Key="GridViewRowDragAndDropStyle"
+           TargetType="telerik:GridViewRow">
+        <Setter Property="telerik:DragDropManager.AllowCapturedDrag" Value="True" />
+        <Setter Property="telerik:TouchManager.DragStartTrigger" Value="TapHoldAndMove" />
     </Style>
 </ResourceDictionary>

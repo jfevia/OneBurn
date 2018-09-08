@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +64,9 @@
     <Compile Include="Dashboard\DashboardViewModelBase.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="DiscLayout\DiscLayoutEditorViewModelBase.cs" />
+    <Compile Include="DiscLayout\LayoutFolderViewModelBase.cs" />
+    <Compile Include="DiscLayout\LayoutNodeViewModelBase.cs" />
+    <Compile Include="DiscLayout\LayoutRootViewModelBase.cs" />
     <Compile Include="FileSystem\DirectoryItemViewModelBase.cs" />
     <Compile Include="FileSystem\FileItemViewModelBase.cs" />
     <Compile Include="FileSystem\FileSystemItemViewModelBase.cs" />
@@ -93,6 +97,8 @@
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="WeakAction.cs" />
     <Compile Include="WeakActionGeneric.cs" />
+    <Compile Include="WindowsApi\FileSystem.cs" />
+    <Compile Include="WindowsApi\IconManager.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -106,6 +112,10 @@
     <ProjectReference Include="..\OneBurn.Core\OneBurn.Core.csproj">
       <Project>{0a76d043-d2b4-466e-9bdb-671edf232d55}</Project>
       <Name>OneBurn.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneBurn.DiscLayout\OneBurn.DiscLayout.csproj">
+      <Project>{7932a99c-2bbc-4988-ba47-c9d19c293440}</Project>
+      <Name>OneBurn.DiscLayout</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneBurn.FileSystem\OneBurn.FileSystem.csproj">
       <Project>{f07655a1-1b83-48b7-ad80-c95a7d38464c}</Project>

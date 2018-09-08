@@ -4,7 +4,7 @@ namespace OneBurn.Windows.Shell.FileSystem
 {
     public class FileSystemItemViewModelBase : ContextViewModelBase, IFileSystemItem
     {
-        private string _fileName;
+        private string _name;
         private string _path;
 
         /// <inheritdoc />
@@ -16,8 +16,8 @@ namespace OneBurn.Windows.Shell.FileSystem
         /// </value>
         public string Name
         {
-            get => _fileName;
-            set => Set(ref _fileName, value);
+            get => _name;
+            set => Set(ref _name, value);
         }
 
         /// <inheritdoc />

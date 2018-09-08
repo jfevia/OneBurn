@@ -2,9 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:containers="clr-namespace:OneBurn.Windows.Wpf.Containers"
+             xmlns:converters="clr-namespace:OneBurn.Windows.Wpf.Converters"
+             xmlns:discLayout="clr-namespace:OneBurn.Windows.Wpf.DiscLayout"
+             xmlns:discLayout1="clr-namespace:OneBurn.Windows.Shell.DiscLayout;assembly=OneBurn.Windows.Shell"
              xmlns:fileSystem="clr-namespace:OneBurn.Windows.Wpf.FileSystem"
+             xmlns:gridView="clr-namespace:OneBurn.Windows.Controls.GridView;assembly=OneBurn.Windows.Controls.GridView"
+             xmlns:providers="clr-namespace:OneBurn.Windows.Wpf.Providers"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
     <UserControl.Resources>
+        <converters:FileSizeToStringConverter x:Key="FileSizeToStringConverter" />
         <DataTemplate DataType="{x:Type fileSystem:DirectoryItemViewModel}">
             <Viewbox Width="24"
                      Height="24"
@@ -17,6 +23,44 @@
                 </Canvas>
             </Viewbox>
         </DataTemplate>
+        <discLayout:LayoutNodeTemplateSelector x:Key="LayoutNodeIconTemplateSelector">
+            <discLayout:LayoutNodeTemplateSelector.RootTemplate>
+                <DataTemplate>
+                    <Viewbox Width="24"
+                             Height="24">
+                        <Canvas Width="24"
+                                Height="24">
+                            <Path Data="M12,14C10.89,14 10,13.1 10,12C10,10.89 10.89,10 12,10C13.11,10 14,10.89 14,12A2,2 0 0,1 12,14M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z"
+                                  Fill="{telerik:MaterialResource ResourceKey=MarkerBrush}" />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </discLayout:LayoutNodeTemplateSelector.RootTemplate>
+            <discLayout:LayoutNodeTemplateSelector.FolderTemplate>
+                <DataTemplate>
+                    <Viewbox Width="24"
+                             Height="24">
+                        <Canvas Width="24"
+                                Height="24">
+                            <Path Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"
+                                  Fill="{telerik:MaterialResource ResourceKey=MarkerBrush}" />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </discLayout:LayoutNodeTemplateSelector.FolderTemplate>
+            <discLayout:LayoutNodeTemplateSelector.DefaultTemplate>
+                <DataTemplate>
+                    <Viewbox Width="24"
+                             Height="24">
+                        <Canvas Width="24"
+                                Height="24">
+                            <Path Data="M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z"
+                                  Fill="Black" />
+                        </Canvas>
+                    </Viewbox>
+                </DataTemplate>
+            </discLayout:LayoutNodeTemplateSelector.DefaultTemplate>
+        </discLayout:LayoutNodeTemplateSelector>
         <HierarchicalDataTemplate x:Key="DirectoryItemTemplate"
                                   DataType="fileSystem:DirectoryItemViewModel"
                                   ItemsSource="{Binding ChildDirectories}">
@@ -40,22 +84,51 @@
                            Text="{Binding Name}" />
             </Grid>
         </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate x:Key="LayoutNodeTemplate"
+                                  DataType="discLayout1:LayoutNodeViewModelBase"
+                                  ItemsSource="{Binding ChildNodes}">
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Grid.Row="0"
+                                  Grid.Column="0"
+                                  Margin="3,2"
+                                  VerticalAlignment="Center"
+                                  Content="{Binding}"
+                                  ContentTemplateSelector="{StaticResource LayoutNodeIconTemplateSelector}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="3,2"
+                           VerticalAlignment="Center"
+                           Text="{Binding Title}" />
+            </Grid>
+        </HierarchicalDataTemplate>
     </UserControl.Resources>
     <telerik:RadBusyIndicator IsBusy="{Binding IsBusy}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="60*" />
+                <RowDefinition Height="60*"
+                               MinHeight="250" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="30*" />
+                <RowDefinition Height="30*"
+                               MinHeight="250" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*" />
-                <ColumnDefinition Width="60*" />
+                <ColumnDefinition Width="20*"
+                                  MinWidth="250" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="80*"
+                                  MinWidth="250" />
             </Grid.ColumnDefinitions>
             <telerik:RadMenu Grid.Row="0"
                              Grid.Column="0"
-                             Grid.ColumnSpan="2"
+                             Grid.ColumnSpan="3"
                              ItemsSource="{Binding PrimaryViewModels}">
                 <telerik:RadMenu.ItemContainerStyle>
                     <Style TargetType="telerik:RadMenuItem">
@@ -65,45 +138,161 @@
                     </Style>
                 </telerik:RadMenu.ItemContainerStyle>
             </telerik:RadMenu>
-            <telerik:RadTreeView IsLoadOnDemandEnabled="True"
-                                     Grid.Row="1"
-                          Grid.Column="0"
-                                     ItemTemplate="{StaticResource DirectoryItemTemplate}"
-                                     ItemsSource="{Binding DirectoryItems}"
-                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                     SelectedItem="{Binding SelectedDirectoryItem, Mode=TwoWay}"
-                                     SelectionMode="Single">
+            <GridSplitter Grid.Row="0"
+                          Grid.RowSpan="2"
+                          Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Stretch" />
+            <telerik:RadTreeView Grid.Row="1"
+                                 Grid.Column="0"
+                                 Padding="10"
+                                 telerik:AnimationManager.IsAnimationEnabled="False"
+                                 IsLoadOnDemandEnabled="True"
+                                 ItemTemplate="{StaticResource DirectoryItemTemplate}"
+                                 ItemsSource="{Binding DirectoryItems}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 SelectedItem="{Binding SelectedDirectoryItem, Mode=TwoWay}"
+                                 SelectionMode="Single">
                 <telerik:EventToCommandBehavior.EventBindings>
                     <telerik:EventBinding Command="{Binding LoadChildDirectoriesCommand}"
-                                              EventName="Expanded"
-                                              PassEventArgsToCommand="True"
-                                              RaiseOnHandledEvents="True" />
+                                          EventName="Expanded"
+                                          PassEventArgsToCommand="True"
+                                          RaiseOnHandledEvents="True" />
                     <telerik:EventBinding Command="{Binding LoadChildFilesCommand}"
-                                              EventName="SelectionChanged"
-                                              PassEventArgsToCommand="False"
-                                              RaiseOnHandledEvents="True" />
+                                          EventName="SelectionChanged"
+                                          PassEventArgsToCommand="False"
+                                          RaiseOnHandledEvents="True" />
                 </telerik:EventToCommandBehavior.EventBindings>
             </telerik:RadTreeView>
             <telerik:RadGridView Grid.Row="1"
-                                 Grid.Column="1"
+                                 Grid.Column="2"
+                                 gridView:GridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
+                                 gridView:GridViewDragDropBehavior.IsEnabled="True"
+                                 AutoGenerateColumns="False"
+                                 IsReadOnly="True"
                                  ItemsSource="{Binding SelectedDirectoryItem.ChildFiles}"
-                                 SelectedItem="{Binding SelectedFileItem}" />
-            <telerik:RadToolBar Grid.Row="2"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                ItemsSource="{Binding SecondaryViewModels}">
-                <telerik:RadToolBar.ItemTemplate>
-                    <DataTemplate DataType="containers:CommandContainerViewModel">
-                        <telerik:RadMenuItem Command="{Binding Command}"
-                                             Header="{Binding Title}" />
+                                 RowStyle="{StaticResource GridViewRowDragAndDropStyle}"
+                                 SelectedItem="{Binding SelectedFileItem}"
+                                 SelectionMode="Extended"
+                                 ShowGroupPanel="False">
+                <telerik:RadGridView.Resources>
+                    <DataTemplate x:Key="DraggedItemTemplate"
+                                  DataType="providers:RadDropObject">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Add to list" />
+                        </StackPanel>
                     </DataTemplate>
-                </telerik:RadToolBar.ItemTemplate>
-            </telerik:RadToolBar>
-            <telerik:RadTreeView Grid.Row="3"
-                                 Grid.Column="0" />
-            <telerik:RadGridView Grid.Row="3"
-                                 Grid.Column="1" />
+                </telerik:RadGridView.Resources>
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
+                                                Header="File Name">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate DataType="fileSystem:FileItemViewModel">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="3,2"
+                                           Source="{Binding Icon}" />
+                                    <TextBlock Margin="3,2"
+                                               Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Size, Converter={StaticResource FileSizeToStringConverter}}"
+                                                Header="Size" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding TypeName}"
+                                                Header="Type" />
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding DateModified}"
+                                                Header="Date Modified" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <GridSplitter Grid.Row="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          Height="5"
+                          HorizontalAlignment="Stretch" />
+            <Grid Grid.Row="3"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"
+                                      MinWidth="250" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="80*"
+                                      MinWidth="250" />
+                </Grid.ColumnDefinitions>
+                <telerik:RadToolBar Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    ItemsSource="{Binding SecondaryViewModels}">
+                    <telerik:RadToolBar.ItemTemplate>
+                        <DataTemplate DataType="containers:CommandContainerViewModel">
+                            <telerik:RadMenuItem Command="{Binding Command}"
+                                                 Header="{Binding Title}" />
+                        </DataTemplate>
+                    </telerik:RadToolBar.ItemTemplate>
+                </telerik:RadToolBar>
+                <telerik:RadTreeView Grid.Row="1"
+                                     Grid.Column="0"
+                                     Padding="10"
+                                     telerik:AnimationManager.IsAnimationEnabled="False"
+                                     ItemTemplate="{StaticResource LayoutNodeTemplate}"
+                                     ItemsSource="{Binding LayoutRoot}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     SelectedItem="{Binding SelectedLayoutNode, Mode=TwoWay}"
+                                     SelectionMode="Single" />
+                <GridSplitter Grid.Row="1"
+                              Grid.Column="1"
+                              Width="5"
+                              HorizontalAlignment="Stretch" />
+                <telerik:RadGridView Grid.Row="1"
+                                     Grid.Column="2"
+                                     gridView:GridViewDragDropBehavior.IsEnabled="True"
+                                     AllowDrop="True"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding SelectedLayoutNode.ChildFiles}"
+                                     RowStyle="{StaticResource GridViewRowDragAndDropStyle}"
+                                     SelectionMode="Extended"
+                                     ShowGroupPanel="False">
+                    <telerik:RadGridView.Resources>
+                        <DataTemplate x:Key="DraggedItemTemplate"
+                                      DataType="providers:RadDropObject">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Move to folder" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadGridView.Resources>
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
+                                                    Header="File Name">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate DataType="fileSystem:FileItemViewModel">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="3,2"
+                                               Source="{Binding Icon}" />
+                                        <TextBlock Margin="3,2"
+                                                   Text="{Binding Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Size, Converter={StaticResource FileSizeToStringConverter}}"
+                                                    Header="Size" />
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding TypeName}"
+                                                    Header="Type" />
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding DateModified}"
+                                                    Header="Date Modified" />
+                        <telerik:GridViewDataColumn DataMemberBinding="{Binding Path}"
+                                                    Header="OS Path" />
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
 </UserControl>
