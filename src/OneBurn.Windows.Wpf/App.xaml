@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/Styles/RadTextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/RadCheckBox.xaml" />
                 <ResourceDictionary Source="/Styles/RadGridView.xaml" />
+                <ResourceDictionary Source="/Styles/RadTreeView.xaml" />
                 <ResourceDictionary Source="/Styles/RadMessageBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

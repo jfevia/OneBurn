@@ -6,8 +6,6 @@
              xmlns:discLayout="clr-namespace:OneBurn.Windows.Wpf.DiscLayout"
              xmlns:discLayout1="clr-namespace:OneBurn.Windows.Shell.DiscLayout;assembly=OneBurn.Windows.Shell"
              xmlns:fileSystem="clr-namespace:OneBurn.Windows.Wpf.FileSystem"
-             xmlns:gridView="clr-namespace:OneBurn.Windows.Controls.GridView;assembly=OneBurn.Windows.Controls.GridView"
-             xmlns:providers="clr-namespace:OneBurn.Windows.Wpf.Providers"
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
     <UserControl.Resources>
         <converters:FileSizeToStringConverter x:Key="FileSizeToStringConverter" />
@@ -22,6 +20,21 @@
                           Fill="#FFE68C" />
                 </Canvas>
             </Viewbox>
+        </DataTemplate>
+        <DataTemplate x:Key="FileDragTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Add to list" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="LayoutNodeDragTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Move to folder" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DirectoryDragTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Add to list" />
+            </StackPanel>
         </DataTemplate>
         <discLayout:LayoutNodeTemplateSelector x:Key="LayoutNodeIconTemplateSelector">
             <discLayout:LayoutNodeTemplateSelector.RootTemplate>
@@ -146,8 +159,12 @@
             <telerik:RadTreeView Grid.Row="1"
                                  Grid.Column="0"
                                  Padding="10"
+                                 discLayout:DirectoryTreeViewToGridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
+                                 discLayout:DirectoryTreeViewToGridViewDragDropBehavior.DragTemplate="{StaticResource DirectoryDragTemplate}"
+                                 discLayout:DirectoryTreeViewToGridViewDragDropBehavior.IsEnabled="True"
                                  telerik:AnimationManager.IsAnimationEnabled="False"
                                  IsLoadOnDemandEnabled="True"
+                                 ItemContainerStyle="{StaticResource RadTreeViewItemDragAndDropStyle}"
                                  ItemTemplate="{StaticResource DirectoryItemTemplate}"
                                  ItemsSource="{Binding DirectoryItems}"
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -167,8 +184,9 @@
             </telerik:RadTreeView>
             <telerik:RadGridView Grid.Row="1"
                                  Grid.Column="2"
-                                 gridView:GridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
-                                 gridView:GridViewDragDropBehavior.IsEnabled="True"
+                                 discLayout:FileGridViewToGridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
+                                 discLayout:FileGridViewToGridViewDragDropBehavior.DragTemplate="{StaticResource FileDragTemplate}"
+                                 discLayout:FileGridViewToGridViewDragDropBehavior.IsEnabled="True"
                                  AutoGenerateColumns="False"
                                  IsReadOnly="True"
                                  ItemsSource="{Binding SelectedDirectoryItem.ChildFiles}"
@@ -176,14 +194,6 @@
                                  SelectedItem="{Binding SelectedFileItem}"
                                  SelectionMode="Extended"
                                  ShowGroupPanel="False">
-                <telerik:RadGridView.Resources>
-                    <DataTemplate x:Key="DraggedItemTemplate"
-                                  DataType="providers:RadDropObject">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Add to list" />
-                        </StackPanel>
-                    </DataTemplate>
-                </telerik:RadGridView.Resources>
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
                                                 Header="File Name">
@@ -240,6 +250,7 @@
                                      Grid.Column="0"
                                      Padding="10"
                                      telerik:AnimationManager.IsAnimationEnabled="False"
+                                     AllowDrop="True"
                                      ItemTemplate="{StaticResource LayoutNodeTemplate}"
                                      ItemsSource="{Binding LayoutRoot}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -252,7 +263,16 @@
                               HorizontalAlignment="Stretch" />
                 <telerik:RadGridView Grid.Row="1"
                                      Grid.Column="2"
-                                     gridView:GridViewDragDropBehavior.IsEnabled="True"
+                                     discLayout:DirectoryTreeViewToGridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
+                                     discLayout:DirectoryTreeViewToGridViewDragDropBehavior.DragTemplate="{StaticResource DirectoryDragTemplate}"
+                                     discLayout:DirectoryTreeViewToGridViewDragDropBehavior.IsEnabled="True"
+                                     discLayout:FileGridViewToGridViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Copy}"
+                                     discLayout:FileGridViewToGridViewDragDropBehavior.DragTemplate="{StaticResource LayoutNodeDragTemplate}"
+                                     discLayout:FileGridViewToGridViewDragDropBehavior.IsEnabled="True"
+                                     discLayout:LayoutFileListGridViewToTreeViewDragDropBehavior.DragDropEffects="{x:Static DragDropEffects.Move}"
+                                     discLayout:LayoutFileListGridViewToTreeViewDragDropBehavior.DragTemplate="{StaticResource LayoutNodeDragTemplate}"
+                                     discLayout:LayoutFileListGridViewToTreeViewDragDropBehavior.IsEnabled="True"
+                                     telerik:AnimationManager.IsAnimationEnabled="False"
                                      AllowDrop="True"
                                      AutoGenerateColumns="False"
                                      IsReadOnly="True"
@@ -260,14 +280,6 @@
                                      RowStyle="{StaticResource GridViewRowDragAndDropStyle}"
                                      SelectionMode="Extended"
                                      ShowGroupPanel="False">
-                    <telerik:RadGridView.Resources>
-                        <DataTemplate x:Key="DraggedItemTemplate"
-                                      DataType="providers:RadDropObject">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Move to folder" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </telerik:RadGridView.Resources>
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}"
                                                     Header="File Name">

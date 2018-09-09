@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace OneBurn.Windows.Wpf.DiscLayout
+﻿namespace OneBurn.Windows.Wpf.DiscLayout
 {
     public partial class DiscLayoutEditorView
     {

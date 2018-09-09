@@ -3,11 +3,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using log4net;
-using OneBurn.Windows.Controls;
 using OneBurn.Windows.Shell.Messaging;
 using OneBurn.Windows.Shell.Services;
 using OneBurn.Windows.Wpf.Properties;
-using OneBurn.Windows.Wpf.Providers;
 using OneBurn.Windows.Wpf.Services;
 using OneBurn.Windows.Wpf.Shell;
 using Telerik.Windows.Controls;
@@ -84,7 +82,6 @@ namespace OneBurn.Windows.Wpf
             Subscribe();
 
             RadThemeService.Instance.Apply(Settings.Default.GeneralAppearanceTheme);
-            DropServiceLocator.SetProvider(new RadDropServiceProvider());
         }
 
         /// <summary>

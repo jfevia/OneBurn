@@ -49,9 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DropServiceLocator.cs" />
-    <Compile Include="IDropObject.cs" />
-    <Compile Include="IDropServiceProvider.cs" />
+    <Compile Include="IDragDropContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
