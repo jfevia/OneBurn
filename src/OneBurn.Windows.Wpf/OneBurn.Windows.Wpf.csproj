@@ -112,14 +112,6 @@
       <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dashboard\DashboardViewModel.cs" />
-    <Compile Include="DiscLayout\DirectoryTreeViewToGridViewDragDropBehavior.cs" />
-    <Compile Include="DiscLayout\DragDropCompletedEventArgs.cs" />
-    <Compile Include="DiscLayout\LayoutFileListDragDropContainer.cs" />
-    <Compile Include="DiscLayout\LayoutFileListGridViewToTreeViewDragDropBehavior.cs" />
-    <Compile Include="DiscLayout\FileGridViewToGridViewDragDropBehavior.cs" />
-    <Compile Include="DiscLayout\RadDragDropBehavior.cs" />
-    <Compile Include="DiscLayout\FileListDragDropContainer.cs" />
-    <Compile Include="DiscLayout\ShellDragDropContainer.cs" />
     <Compile Include="DiscLayout\LayoutNodeTemplateSelector.cs" />
     <Compile Include="DiscLayout\DiscLayoutEditorView.xaml.cs">
       <DependentUpon>DiscLayoutEditorView.xaml</DependentUpon>
@@ -127,6 +119,7 @@
     <Compile Include="DiscLayout\DiscLayoutEditorViewModel.cs" />
     <Compile Include="DiscLayout\LayoutFolderViewModel.cs" />
     <Compile Include="DiscLayout\LayoutRootViewModel.cs" />
+    <Compile Include="DiscLayout\RadDragDropBehavior.cs" />
     <Compile Include="FileSystem\DirectoryItemViewModel.cs" />
     <Compile Include="FileSystem\FileItemViewModel.cs" />
     <Compile Include="FileSystem\FileSystemItemViewModel.cs" />
