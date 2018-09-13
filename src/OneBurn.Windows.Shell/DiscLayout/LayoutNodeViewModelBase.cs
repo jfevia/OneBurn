@@ -9,6 +9,7 @@ namespace OneBurn.Windows.Shell.DiscLayout
         private ObservableCollection<FileItemViewModelBase> _childFiles;
         private ObservableCollection<LayoutNodeViewModelBase> _childNodes;
         private string _name;
+        private string _path;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="LayoutNodeViewModelBase" /> class.
@@ -41,6 +42,18 @@ namespace OneBurn.Windows.Shell.DiscLayout
         {
             get => _childFiles;
             set => Set(ref _childFiles, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the path.
+        /// </summary>
+        /// <value>
+        ///     The path.
+        /// </value>
+        public string Path
+        {
+            get => _path;
+            set => Set(ref _path, value);
         }
 
         /// <inheritdoc />

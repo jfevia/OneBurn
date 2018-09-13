@@ -10,6 +10,7 @@ using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Containers;
 using OneBurn.Windows.Shell.DiscLayout;
 using OneBurn.Windows.Shell.FileSystem;
+using OneBurn.Windows.Shell.Services;
 using OneBurn.Windows.Shell.WindowsApi;
 using OneBurn.Windows.Wpf.Containers;
 using OneBurn.Windows.Wpf.FileSystem;
@@ -30,6 +31,8 @@ namespace OneBurn.Windows.Wpf.DiscLayout
 
             LoadChildDirectoriesCommand = new AsyncCommand<object>(LoadChildDirectoriesAsync);
             LoadChildFilesCommand = new AsyncCommand(LoadChildFilesAsync);
+
+            MessagingService.Instance.Register<AddDirectoryItemToDiscLayoutMessage>(this, OnAddDirectoryItemToDiscLayout);
         }
 
         /// <summary>
@@ -47,6 +50,49 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         ///     The load child files command.
         /// </value>
         public ICommand LoadChildFilesCommand { get; }
+
+        /// <summary>
+        ///     Called when [add directory item to disc layout].
+        /// </summary>
+        /// <param name="message">The message.</param>
+        private async void OnAddDirectoryItemToDiscLayout(AddDirectoryItemToDiscLayoutMessage message)
+        {
+            IsBusy = true;
+            await PopulateLayoutNode(LayoutRoot.First(), message.DirectoryItem);
+            IsBusy = false;
+        }
+
+        /// <summary>
+        ///     Populates the layout node.
+        /// </summary>
+        /// <param name="layoutNode">The layout node.</param>
+        /// <param name="directoryItem">The directory item.</param>
+        /// <returns>The task.</returns>
+        private static async Task PopulateLayoutNode(LayoutNodeViewModelBase layoutNode, DirectoryItemViewModel directoryItem)
+        {
+            var item = new LayoutFolderViewModel();
+            item.Name = directoryItem.Name;
+            item.Path = directoryItem.Path;
+            layoutNode.ChildNodes.Add(item);
+
+            var files = await FileSystemService.Instance.GetFilesAsync(item.Path);
+            item.ChildFiles = new ObservableCollection<FileItemViewModelBase>(files.Select(ToViewModel));
+
+            var childDirectories = (await FileSystemService.Instance.GetDirectoriesAsync(item.Path)).ToList();
+            foreach (var childDirectory in childDirectories)
+                await PopulateLayoutNode(item, ToViewModel(childDirectory));
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public override void Dispose()
+        {
+            MessagingService.Instance.Unregister<AddDirectoryItemToDiscLayoutMessage>(this);
+
+            base.Dispose();
+        }
 
         /// <summary>
         ///     Loads the child files asynchronous.
@@ -95,7 +141,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
             {
                 new LayoutRootViewModel
                 {
-                    Title = "Root"
+                    Name = "Root"
                 }
             };
             SelectedLayoutNode = LayoutRoot.FirstOrDefault();

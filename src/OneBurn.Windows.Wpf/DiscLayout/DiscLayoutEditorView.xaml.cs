@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using OneBurn.Windows.Shell.FileSystem;
+using OneBurn.Windows.Shell.Services;
+using OneBurn.Windows.Wpf.FileSystem;
 using Telerik.Windows.Controls;
 using Telerik.Windows.DragDrop;
 using DragEventArgs = Telerik.Windows.DragDrop.DragEventArgs;
@@ -56,7 +58,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         private static void RadTreeViewDiscLayout_DragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
-            if (DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is DirectoryItemViewModelBase)
+            if (DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is DirectoryItemViewModel)
             {
                 e.Effects = DragDropEffects.Copy;
                 return;
@@ -72,16 +74,13 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <param name="e">The <see cref="DragEventArgs" /> instance containing the event data.</param>
         private void RadTreeViewDiscLayout_Drop(object sender, DragEventArgs e)
         {
-            if (!(RadTreeViewDiscLayout.ItemsSource is IList itemsSource))
-                return;
-
-            if (!(DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is DirectoryItemViewModelBase item))
+            if (!(DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is DirectoryItemViewModel item))
                 return;
 
             if (e.Effects == DragDropEffects.None)
                 return;
 
-            itemsSource.Add(item);
+            MessagingService.Instance.Send(new AddDirectoryItemToDiscLayoutMessage(item));
             e.Handled = true;
         }
 

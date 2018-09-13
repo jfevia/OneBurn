@@ -118,7 +118,7 @@
                            Grid.Column="1"
                            Margin="3,2"
                            VerticalAlignment="Center"
-                           Text="{Binding Title}" />
+                           Text="{Binding Name}" />
             </Grid>
         </HierarchicalDataTemplate>
     </UserControl.Resources>
