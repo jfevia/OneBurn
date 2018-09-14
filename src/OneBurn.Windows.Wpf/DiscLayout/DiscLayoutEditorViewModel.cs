@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
+using OneBurn.FileSystem;
 using OneBurn.Windows.Shell;
 using OneBurn.Windows.Shell.Commands;
 using OneBurn.Windows.Shell.Containers;
@@ -33,6 +36,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
             LoadChildFilesCommand = new AsyncCommand(LoadChildFilesAsync);
 
             MessagingService.Instance.Register<AddDirectoryItemToDiscLayoutMessage>(this, OnAddDirectoryItemToDiscLayout);
+            MessagingService.Instance.Register<AddFileItemsToDiscLayoutMessage>(this, OnAddFileItemsToDiscLayout);
         }
 
         /// <summary>
@@ -50,6 +54,19 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         ///     The load child files command.
         /// </value>
         public ICommand LoadChildFilesCommand { get; }
+
+        /// <summary>
+        ///     Called when [add file items to disc layout].
+        /// </summary>
+        /// <param name="message">The message.</param>
+        private void OnAddFileItemsToDiscLayout(AddFileItemsToDiscLayoutMessage message)
+        {
+            if (SelectedLayoutNode == null)
+                return;
+
+            foreach (var item in message.Items.Select(ToLayoutFile))
+                SelectedLayoutNode.ChildFiles.Add(item);
+        }
 
         /// <summary>
         ///     Called when [add directory item to disc layout].
@@ -76,7 +93,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
             layoutNode.ChildNodes.Add(item);
 
             var files = await FileSystemService.Instance.GetFilesAsync(item.Path);
-            item.ChildFiles = new ObservableCollection<FileItemViewModelBase>(files.Select(ToViewModel));
+            item.ChildFiles = new ObservableCollection<LayoutFileViewModelBase>(files.Select(ToLayoutFile));
 
             var childDirectories = (await FileSystemService.Instance.GetDirectoriesAsync(item.Path)).ToList();
             foreach (var childDirectory in childDirectories)
@@ -155,7 +172,8 @@ namespace OneBurn.Windows.Wpf.DiscLayout
                     {
                         new CommandContainerViewModel
                         {
-                            Title = "Open..."
+                            Title = "Open...",
+                            Command = new AsyncCommand(OpenProjectAsync)
                         },
                         new CommandContainerViewModel
                         {
@@ -163,11 +181,13 @@ namespace OneBurn.Windows.Wpf.DiscLayout
                         },
                         new CommandContainerViewModel
                         {
-                            Title = "Save"
+                            Title = "Save",
+                            Command = new AsyncCommand(SaveProjectAsync)
                         },
                         new CommandContainerViewModel
                         {
-                            Title = "Save As..."
+                            Title = "Save As...",
+                            Command = new AsyncCommand(CloneProjectAsync)
                         },
                         new CommandContainerViewModel
                         {
@@ -210,6 +230,99 @@ namespace OneBurn.Windows.Wpf.DiscLayout
             };
 
             await LoadDirectoryItemsAsync();
+        }
+
+        /// <summary>
+        ///     Opens a project asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        private async Task OpenProjectAsync()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.AddExtension = true;
+            openFileDialog.Title = "Open...";
+            openFileDialog.Filter = "OneBurn Project (*.obp)|*.obp";
+
+            var result = openFileDialog.ShowDialog();
+            if (result != true)
+                return;
+
+            await LoadProjectAsync(openFileDialog.FileName);
+        }
+
+        /// <summary>
+        ///     Loads the project asynchronously.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>The task.</returns>
+        /// <exception cref="System.ArgumentNullException">fileName</exception>
+        private async Task LoadProjectAsync(string fileName)
+        {
+            if (fileName == null) throw new ArgumentNullException(nameof(fileName));
+
+            LayoutRoot = new ObservableCollection<LayoutNodeViewModelBase>
+            {
+                await DiscLayoutSerializationService.DeserializeAsync(File.ReadAllText(fileName))
+            };
+        }
+
+        /// <summary>
+        ///     Saves the project to a new file path asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        private async Task CloneProjectAsync()
+        {
+            var outputFilePath = GetOutputFilePath();
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+                return;
+
+            await SaveProjectAsync(outputFilePath, LayoutRoot.First());
+        }
+
+        /// <summary>
+        ///     Saves the project asynchronously.
+        /// </summary>
+        /// <returns>The task.</returns>
+        private async Task SaveProjectAsync()
+        {
+            var outputFilePath = GetOutputFilePath(ProjectFilePath);
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+                return;
+
+            await SaveProjectAsync(outputFilePath, LayoutRoot.First());
+        }
+
+        /// <summary>
+        ///     Saves the project asynchronously.
+        /// </summary>
+        /// <param name="projectFilePath">The project file path.</param>
+        /// <param name="layoutRoot">The layout root.</param>
+        /// <returns>The task.</returns>
+        private static async Task SaveProjectAsync(string projectFilePath, LayoutNodeViewModelBase layoutRoot)
+        {
+            if (projectFilePath == null) throw new ArgumentNullException(nameof(projectFilePath));
+            if (layoutRoot == null) throw new ArgumentNullException(nameof(layoutRoot));
+
+            File.WriteAllText(projectFilePath, await DiscLayoutSerializationService.SerializeAsync(layoutRoot));
+        }
+
+        /// <summary>
+        ///     Gets the output file path.
+        /// </summary>
+        /// <param name="defaultFilePath">The default file path.</param>
+        /// <returns>The output file path.</returns>
+        private static string GetOutputFilePath(string defaultFilePath = null)
+        {
+            if (!string.IsNullOrWhiteSpace(defaultFilePath))
+                return defaultFilePath;
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.Title = "Save As...";
+            saveFileDialog.Filter = "OneBurn Project (*.obp)|*.obp";
+
+            var result = saveFileDialog.ShowDialog();
+            return result != true ? null : saveFileDialog.FileName;
         }
 
         /// <summary>
@@ -265,13 +378,49 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         }
 
         /// <summary>
-        ///     Converts the item its equivalent view model.
+        ///     Converts the item to its equivalent view model.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The view model.</returns>
         private static FileItemViewModel ToViewModel(FileInfo item)
         {
             return new FileItemViewModel
+            {
+                Name = item.Name,
+                Path = item.FullName,
+                Size = item.Length,
+                DateModified = item.LastWriteTime,
+                TypeName = Windows.Shell.WindowsApi.FileSystem.GetTypeFriendlyName(item.FullName),
+                Icon = IconManager.FindIconForFilename(item.FullName, false)
+            };
+        }
+
+        /// <summary>
+        ///     Converts the item to its equivalent layout file.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The view model</returns>
+        private static LayoutFileViewModel ToLayoutFile(IFileItem item)
+        {
+            return new LayoutFileViewModel
+            {
+                Name = item.Name,
+                Path = item.Path,
+                Size = item.Size,
+                DateModified = item.DateModified,
+                TypeName = Windows.Shell.WindowsApi.FileSystem.GetTypeFriendlyName(item.Path),
+                Icon = IconManager.FindIconForFilename(item.Path, false)
+            };
+        }
+
+        /// <summary>
+        ///     Converts the item to its equivalent layout file.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The view model</returns>
+        private static LayoutFileViewModel ToLayoutFile(FileInfo item)
+        {
+            return new LayoutFileViewModel
             {
                 Name = item.Name,
                 Path = item.FullName,

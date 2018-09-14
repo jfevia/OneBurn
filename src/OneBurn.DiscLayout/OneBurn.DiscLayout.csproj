@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILayoutFile.cs" />
     <Compile Include="ILayoutFolder.cs" />
     <Compile Include="ILayoutRoot.cs" />
     <Compile Include="ILayoutNode.cs" />

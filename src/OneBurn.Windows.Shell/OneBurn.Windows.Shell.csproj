@@ -64,6 +64,7 @@
     <Compile Include="Dashboard\DashboardViewModelBase.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="DiscLayout\DiscLayoutEditorViewModelBase.cs" />
+    <Compile Include="DiscLayout\LayoutFileViewModelBase.cs" />
     <Compile Include="DiscLayout\LayoutFolderViewModelBase.cs" />
     <Compile Include="DiscLayout\LayoutNodeViewModelBase.cs" />
     <Compile Include="DiscLayout\LayoutRootViewModelBase.cs" />

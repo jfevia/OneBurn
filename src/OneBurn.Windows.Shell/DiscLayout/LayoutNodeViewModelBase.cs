@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using OneBurn.DiscLayout;
-using OneBurn.Windows.Shell.FileSystem;
 
 namespace OneBurn.Windows.Shell.DiscLayout
 {
     public abstract class LayoutNodeViewModelBase : ContextViewModelBase, ILayoutNode
     {
-        private ObservableCollection<FileItemViewModelBase> _childFiles;
+        private ObservableCollection<LayoutFileViewModelBase> _childFiles;
         private ObservableCollection<LayoutNodeViewModelBase> _childNodes;
         private string _name;
         private string _path;
@@ -17,7 +16,7 @@ namespace OneBurn.Windows.Shell.DiscLayout
         protected LayoutNodeViewModelBase()
         {
             _childNodes = new ObservableCollection<LayoutNodeViewModelBase>();
-            _childFiles = new ObservableCollection<FileItemViewModelBase>();
+            _childFiles = new ObservableCollection<LayoutFileViewModelBase>();
         }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace OneBurn.Windows.Shell.DiscLayout
         /// <value>
         ///     The child files.
         /// </value>
-        public virtual ObservableCollection<FileItemViewModelBase> ChildFiles
+        public virtual ObservableCollection<LayoutFileViewModelBase> ChildFiles
         {
             get => _childFiles;
             set => Set(ref _childFiles, value);

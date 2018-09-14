@@ -8,6 +8,7 @@ namespace OneBurn.Windows.Shell.DiscLayout
     {
         private ObservableCollection<DirectoryItemViewModelBase> _directoryItems;
         private ObservableCollection<LayoutNodeViewModelBase> _layoutRoot;
+        private string _projectFilePath;
         private DirectoryItemViewModelBase _selectedDirectoryItem;
         private FileItemViewModelBase _selectedFileItem;
         private LayoutNodeViewModelBase _selectedLayoutNode;
@@ -22,6 +23,18 @@ namespace OneBurn.Windows.Shell.DiscLayout
         {
             get => _selectedDirectoryItem;
             set => Set(ref _selectedDirectoryItem, value);
+        }
+
+        /// <summary>
+        ///     Gets or sets the project file path.
+        /// </summary>
+        /// <value>
+        ///     The project file path.
+        /// </value>
+        public string ProjectFilePath
+        {
+            get => _projectFilePath;
+            set => Set(ref _projectFilePath, value);
         }
 
         /// <summary>

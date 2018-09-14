@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -72,7 +71,7 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="DragEventArgs" /> instance containing the event data.</param>
-        private void RadTreeViewDiscLayout_Drop(object sender, DragEventArgs e)
+        private static void RadTreeViewDiscLayout_Drop(object sender, DragEventArgs e)
         {
             if (!(DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is DirectoryItemViewModel item))
                 return;
@@ -141,20 +140,15 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Windows.DragDrop.DragEventArgs" /> instance containing the event data.</param>
-        private void RadGridViewLayoutFiles_Drop(object sender, DragEventArgs e)
+        private static void RadGridViewLayoutFiles_Drop(object sender, DragEventArgs e)
         {
-            if (!(RadGridViewLayoutFiles.ItemsSource is IList itemsSource))
-                return;
-
             if (!(DragDropPayloadManager.GetDataFromObject(e.Data, "Data") is IEnumerable<FileItemViewModelBase> items))
                 return;
 
             if (e.Effects == DragDropEffects.None)
                 return;
 
-            foreach (var item in items)
-                itemsSource.Add(item);
-
+            MessagingService.Instance.Send(new AddFileItemsToDiscLayoutMessage(items));
             e.Handled = true;
         }
 

@@ -38,6 +38,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
@@ -113,6 +116,8 @@
     </Compile>
     <Compile Include="Dashboard\DashboardViewModel.cs" />
     <Compile Include="DiscLayout\AddDirectoryItemToDiscLayoutMessage.cs" />
+    <Compile Include="DiscLayout\AddFileItemsToDiscLayoutMessage.cs" />
+    <Compile Include="DiscLayout\LayoutFileViewModel.cs" />
     <Compile Include="DiscLayout\LayoutNodeTemplateSelector.cs" />
     <Compile Include="DiscLayout\DiscLayoutEditorView.xaml.cs">
       <DependentUpon>DiscLayoutEditorView.xaml</DependentUpon>
@@ -124,6 +129,8 @@
     <Compile Include="FileSystem\DirectoryItemViewModel.cs" />
     <Compile Include="FileSystem\FileItemViewModel.cs" />
     <Compile Include="FileSystem\FileSystemItemViewModel.cs" />
+    <Compile Include="Services\DiscLayoutJsonConverter.cs" />
+    <Compile Include="Services\DiscLayoutSerializationService.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\IDialogService.cs" />
