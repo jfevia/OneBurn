@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using OneBurn.Windows.Shell.FileSystem;
 using OneBurn.Windows.Shell.Services;
 using OneBurn.Windows.Shell.WindowsApi;
 using OneBurn.Windows.Wpf.Containers;
+using OneBurn.Windows.Wpf.DiscLayout.Serialization;
 using OneBurn.Windows.Wpf.FileSystem;
 using OneBurn.Windows.Wpf.Services;
 using Telerik.Windows.Controls;
@@ -61,11 +63,11 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <param name="message">The message.</param>
         private void OnAddFileItemsToDiscLayout(AddFileItemsToDiscLayoutMessage message)
         {
-            if (SelectedLayoutNode == null)
+            if (SelectedLayoutFolder == null)
                 return;
 
             foreach (var item in message.Items.Select(ToLayoutFile))
-                SelectedLayoutNode.ChildFiles.Add(item);
+                SelectedLayoutFolder.Files.Add(item);
         }
 
         /// <summary>
@@ -85,15 +87,15 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <param name="layoutNode">The layout node.</param>
         /// <param name="directoryItem">The directory item.</param>
         /// <returns>The task.</returns>
-        private static async Task PopulateLayoutNode(LayoutNodeViewModelBase layoutNode, DirectoryItemViewModel directoryItem)
+        private static async Task PopulateLayoutNode(LayoutFolderViewModelBase layoutNode, DirectoryItemViewModel directoryItem)
         {
             var item = new LayoutFolderViewModel();
             item.Name = directoryItem.Name;
             item.Path = directoryItem.Path;
-            layoutNode.ChildNodes.Add(item);
+            layoutNode.Folders.Add(item);
 
             var files = await FileSystemService.Instance.GetFilesAsync(item.Path);
-            item.ChildFiles = new ObservableCollection<LayoutFileViewModelBase>(files.Select(ToLayoutFile));
+            item.Files = new ObservableCollection<LayoutFileViewModelBase>(files.Select(ToLayoutFile));
 
             var childDirectories = (await FileSystemService.Instance.GetDirectoriesAsync(item.Path)).ToList();
             foreach (var childDirectory in childDirectories)
@@ -154,14 +156,14 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         {
             await base.LoadDataAsync();
 
-            LayoutRoot = new ObservableCollection<LayoutNodeViewModelBase>
+            LayoutRoot = new ObservableCollection<LayoutRootViewModelBase>
             {
                 new LayoutRootViewModel
                 {
                     Name = "Root"
                 }
             };
-            SelectedLayoutNode = LayoutRoot.FirstOrDefault();
+            SelectedLayoutFolder = LayoutRoot.FirstOrDefault();
 
             PrimaryViewModels = new ObservableCollection<ContextViewModelBase>
             {
@@ -260,9 +262,9 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         {
             if (fileName == null) throw new ArgumentNullException(nameof(fileName));
 
-            LayoutRoot = new ObservableCollection<LayoutNodeViewModelBase>
+            LayoutRoot = new ObservableCollection<LayoutRootViewModelBase>
             {
-                await DiscLayoutSerializationService.DeserializeAsync(File.ReadAllText(fileName))
+                await DiscLayoutSerializationService.Instance.DeserializeAsync(File.ReadAllText(fileName))
             };
         }
 
@@ -298,12 +300,20 @@ namespace OneBurn.Windows.Wpf.DiscLayout
         /// <param name="projectFilePath">The project file path.</param>
         /// <param name="layoutRoot">The layout root.</param>
         /// <returns>The task.</returns>
-        private static async Task SaveProjectAsync(string projectFilePath, LayoutNodeViewModelBase layoutRoot)
+        private static async Task SaveProjectAsync(string projectFilePath, LayoutRootViewModelBase layoutRoot)
         {
             if (projectFilePath == null) throw new ArgumentNullException(nameof(projectFilePath));
             if (layoutRoot == null) throw new ArgumentNullException(nameof(layoutRoot));
 
-            File.WriteAllText(projectFilePath, await DiscLayoutSerializationService.SerializeAsync(layoutRoot));
+            var tempFilePath = Path.GetTempFileName();
+            File.WriteAllText(tempFilePath, await DiscLayoutSerializationService.Instance.SerializeAsync(layoutRoot));
+
+            using (var originalFileStream = File.OpenRead(tempFilePath))
+            using (var compressedFileStream = File.Create(projectFilePath))
+            using (var compressionStream = new GZipStream(compressedFileStream, CompressionMode.Compress))
+                originalFileStream.CopyTo(compressionStream);
+
+            File.Delete(tempFilePath);
         }
 
         /// <summary>

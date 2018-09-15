@@ -99,7 +99,7 @@
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate x:Key="LayoutNodeTemplate"
                                   DataType="discLayout1:LayoutNodeViewModelBase"
-                                  ItemsSource="{Binding ChildNodes}">
+                                  ItemsSource="{Binding Folders}">
             <Grid VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -254,7 +254,7 @@
                                      ItemsSource="{Binding LayoutRoot}"
                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                     SelectedItem="{Binding SelectedLayoutNode, Mode=TwoWay}"
+                                     SelectedItem="{Binding SelectedLayoutFolder, Mode=TwoWay}"
                                      SelectionMode="Single" />
                 <GridSplitter Grid.Row="1"
                               Grid.Column="1"
@@ -268,7 +268,7 @@
                                      AllowDrop="True"
                                      AutoGenerateColumns="False"
                                      IsReadOnly="True"
-                                     ItemsSource="{Binding SelectedLayoutNode.ChildFiles}"
+                                     ItemsSource="{Binding SelectedLayoutFolder.Files}"
                                      RowStyle="{StaticResource GridViewRowDragAndDropStyle}"
                                      SelectionMode="Extended"
                                      ShowGroupPanel="False">

@@ -7,11 +7,11 @@ namespace OneBurn.Windows.Shell.DiscLayout
     public abstract class DiscLayoutEditorViewModelBase : CompositeContainerViewModel
     {
         private ObservableCollection<DirectoryItemViewModelBase> _directoryItems;
-        private ObservableCollection<LayoutNodeViewModelBase> _layoutRoot;
+        private ObservableCollection<LayoutRootViewModelBase> _layoutRoot;
         private string _projectFilePath;
         private DirectoryItemViewModelBase _selectedDirectoryItem;
         private FileItemViewModelBase _selectedFileItem;
-        private LayoutNodeViewModelBase _selectedLayoutNode;
+        private LayoutFolderViewModelBase _selectedLayoutFolder;
 
         /// <summary>
         ///     Gets or sets the selected directory item.
@@ -55,7 +55,7 @@ namespace OneBurn.Windows.Shell.DiscLayout
         /// <value>
         ///     The layout root.
         /// </value>
-        public ObservableCollection<LayoutNodeViewModelBase> LayoutRoot
+        public ObservableCollection<LayoutRootViewModelBase> LayoutRoot
         {
             get => _layoutRoot;
             set => Set(ref _layoutRoot, value);
@@ -74,15 +74,15 @@ namespace OneBurn.Windows.Shell.DiscLayout
         }
 
         /// <summary>
-        ///     Gets or sets the selected layout node.
+        ///     Gets or sets the selected layout folder.
         /// </summary>
         /// <value>
-        ///     The selected layout node.
+        ///     The selected layout folder.
         /// </value>
-        public virtual LayoutNodeViewModelBase SelectedLayoutNode
+        public virtual LayoutFolderViewModelBase SelectedLayoutFolder
         {
-            get => _selectedLayoutNode;
-            set => Set(ref _selectedLayoutNode, value);
+            get => _selectedLayoutFolder;
+            set => Set(ref _selectedLayoutFolder, value);
         }
     }
 }

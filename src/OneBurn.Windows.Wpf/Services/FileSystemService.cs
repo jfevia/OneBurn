@@ -24,7 +24,6 @@ namespace OneBurn.Windows.Wpf.Services
         /// </value>
         public static FileSystemService Instance { get; }
 
-
         /// <inheritdoc />
         /// <summary>
         ///     Gets the directories asynchronously.
